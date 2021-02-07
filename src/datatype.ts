@@ -16,6 +16,7 @@ export const Timestamp: ColumnOptions = {
 export function Status(value = 1, comment?: string): ColumnOptions {
   return {
     type: 'tinyint',
+    width: 1,
     unsigned: true,
     nullable: false,
     default: value,
