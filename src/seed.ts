@@ -1,0 +1,125 @@
+import 'reflect-metadata';
+import { createConnection, getRepository } from 'typeorm';
+import { Acl } from './entity/acl';
+import { Resource } from './entity/resource';
+
+createConnection().then(async connection => {
+  const time = Math.floor(new Date().getTime() / 1000);
+  await getRepository(Acl).insert([
+    {
+      key: 'resource',
+      name: { zh_cn: '资源控制模块', en_us: 'Resource Module' },
+      write: 'add,edit,delete,sort',
+      read: 'originLists,lists,get',
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'acl',
+      name: { zh_cn: '访问控制模块', en_us: 'Acl Module' },
+      write: 'add,edit,delete',
+      read: 'originLists,lists,get',
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'policy',
+      name: { zh_cn: '策略模块', en_us: 'Policy Module' },
+      write: 'add,delete',
+      read: 'originLists',
+      create_time: time,
+      update_time: time,
+    },
+  ]);
+  await getRepository(Resource).insert([
+    {
+      key: 'resource',
+      parent: 'origin',
+      name: { zh_cn: '系统设置', en_us: 'System' },
+      nav: 1,
+      router: 0,
+      policy: 0,
+      icon: 'setting',
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'control',
+      parent: 'system',
+      name: { zh_cn: '控制授权', en_us: 'Control' },
+      nav: 1,
+      router: 0,
+      policy: 0,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'acl-index',
+      parent: 'control',
+      name: { zh_cn: '访问项', en_us: 'Acl' },
+      nav: 1,
+      router: 1,
+      policy: 1,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'acl-add',
+      parent: 'acl-index',
+      name: { zh_cn: '访问项新增', en_us: 'Acl Add' },
+      nav: 0,
+      router: 1,
+      policy: 0,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'acl-edit',
+      parent: 'acl-index',
+      name: { zh_cn: '访问项修改', en_us: 'Acl Edit' },
+      nav: 0,
+      router: 1,
+      policy: 0,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'resource-index',
+      parent: 'control',
+      name: { zh_cn: '资源项', en_us: 'Resource' },
+      nav: 1,
+      router: 1,
+      policy: 1,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'resource-add',
+      parent: 'resource-index',
+      name: { zh_cn: '资源项新增', en_us: 'Resource Add' },
+      nav: 0,
+      router: 1,
+      policy: 0,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+    {
+      key: 'resource-edit',
+      parent: 'resource-index',
+      name: { zh_cn: '资源项修改', en_us: 'Resource Edit' },
+      nav: 0,
+      router: 1,
+      policy: 0,
+      icon: null,
+      create_time: time,
+      update_time: time,
+    },
+  ]);
+  await connection.close();
+}).catch(error => console.log(error));

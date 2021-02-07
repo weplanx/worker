@@ -13,10 +13,9 @@ export const Timestamp: ColumnOptions = {
   default: 0,
 };
 
-export function Boolean(value = 1, comment?: string): ColumnOptions {
+export function Status(value = 1, comment?: string): ColumnOptions {
   return {
     type: 'tinyint',
-    width: 1,
     unsigned: true,
     nullable: false,
     default: value,
