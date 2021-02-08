@@ -7,7 +7,7 @@ import { Policy } from './policy';
       .select('rrr.role_key,p.acl_key')
       .addSelect('max(p.policy)', 'policy')
       .from(RoleResourceRel, 'rrr')
-      .leftJoin(Policy, 'p', 'rrr.resource_key = p.resource_key')
+      .innerJoin(Policy, 'p', 'rrr.resource_key = p.resource_key')
       .groupBy('rrr.role_key,p.acl_key')
   ),
 })
