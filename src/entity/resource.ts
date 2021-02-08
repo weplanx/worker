@@ -6,13 +6,13 @@ export class Resource {
   @PrimaryGeneratedColumn(Id)
   id: number;
 
-  @Column({ length: 200, nullable: false, unique: true, comment: '资源控制代码' })
+  @Column({ length: 200, unique: true, comment: '资源控制代码' })
   key: string;
 
-  @Column({ length: 200, nullable: false, default: 'origin', comment: '资源键父节点' })
+  @Column({ length: 200, default: 'origin', comment: '资源键父节点' })
   parent: string;
 
-  @Column({ type: 'json', nullable: false, comment: '资源控制名称' })
+  @Column({ type: 'json', comment: '资源控制名称' })
   name: object;
 
   @Column(Status(0, '是否为导航（中后台菜单显示）'))
@@ -27,7 +27,7 @@ export class Resource {
   @Column({ length: 200, nullable: true, comment: '字体图标' })
   icon: string;
 
-  @Column({ type: 'tinyint', unsigned: true, nullable: false, default: 0, comment: '排序' })
+  @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '排序' })
   sort: number;
 
   @Column(Status())

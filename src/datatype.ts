@@ -9,7 +9,6 @@ export const Id: PrimaryGeneratedColumnNumericOptions = {
 export const Timestamp: ColumnOptions = {
   type: 'bigint',
   unsigned: true,
-  nullable: false,
   default: 0,
 };
 
@@ -18,7 +17,6 @@ export function Status(value = 1, comment?: string): ColumnOptions {
     type: 'tinyint',
     width: 1,
     unsigned: true,
-    nullable: false,
     default: value,
     comment,
   };

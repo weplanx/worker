@@ -6,10 +6,10 @@ export class Acl {
   @PrimaryGeneratedColumn(Id)
   id: number;
 
-  @Column({ length: 200, nullable: false, unique: true, comment: '访问控制代码' })
+  @Column({ length: 200, unique: true, comment: '访问控制代码' })
   key: string;
 
-  @Column({ type: 'json', nullable: false, comment: '访问控制名称' })
+  @Column({ type: 'json', comment: '访问控制名称' })
   name: object;
 
   @Column({ type: 'longtext', nullable: true, comment: '写入控制项' })
