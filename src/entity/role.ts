@@ -1,11 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Id, Status, Timestamp } from '../datatype';
+import { Column, Entity } from 'typeorm';
+import { Common } from './common';
 
 @Entity()
-export class Role {
-  @PrimaryGeneratedColumn(Id)
-  id: number;
-
+export class Role extends Common {
   @Column({ length: 200, unique: true, comment: '权限组代码' })
   key: string;
 
@@ -17,13 +14,4 @@ export class Role {
 
   @Column({ type: 'text', comment: '备注' })
   note: string;
-
-  @Column(Status())
-  status: number;
-
-  @Column(Timestamp)
-  create_time: number;
-
-  @Column(Timestamp)
-  update_time: number;
 }

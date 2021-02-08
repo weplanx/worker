@@ -1,11 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Id, Status, Timestamp } from '../datatype';
+import { Column, Entity } from 'typeorm';
+import { Common } from './common';
 
 @Entity()
-export class Acl {
-  @PrimaryGeneratedColumn(Id)
-  id: number;
-
+export class Acl extends Common {
   @Column({ length: 200, unique: true, comment: '访问控制代码' })
   key: string;
 
@@ -17,13 +14,4 @@ export class Acl {
 
   @Column({ type: 'longtext', nullable: true, comment: '读取控制项' })
   read: string;
-
-  @Column(Status())
-  status: number;
-
-  @Column(Timestamp)
-  create_time: number;
-
-  @Column(Timestamp)
-  update_time: number;
 }
