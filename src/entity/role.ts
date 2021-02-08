@@ -9,9 +9,9 @@ export class Role extends Common {
   @Column({ type: 'json', comment: '权限组名称' })
   name: object;
 
-  @Column({ type: 'longtext', comment: '特殊授权' })
+  @Column({ type: 'longtext', nullable: true, comment: '特殊授权' })
   permission: string;
 
-  @Column({ type: 'text', comment: '备注' })
+  @Column({ type: 'text', nullable: true, comment: '备注' })
   note: string;
 }
