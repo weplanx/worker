@@ -4,7 +4,7 @@ import { Resource } from '../entity/resource';
 export async function resource(vars: any) {
   await getRepository(Resource).insert([
     {
-      key: 'resource',
+      key: 'system',
       parent: 'origin',
       name: { zh_cn: '系统设置', en_us: 'System' },
       nav: 1,

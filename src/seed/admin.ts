@@ -2,9 +2,10 @@ import { getRepository } from 'typeorm';
 import { argon2id } from 'hash-wasm';
 import { randomBytes } from 'crypto';
 import { Admin } from '../entity/admin';
+import { AdminRoleRel } from '../entity/admin-role-rel';
 
 export async function admin(vars: any) {
-  await getRepository(Admin).insert([
+  const result = await getRepository(Admin).insert(
     {
       username: 'super',
       password: await argon2id({
@@ -20,5 +21,9 @@ export async function admin(vars: any) {
       create_time: vars.time,
       update_time: vars.time,
     },
-  ]);
+  );
+  await getRepository(AdminRoleRel).insert({
+    admin_id: result.identifiers[0].id,
+    role_key: '*',
+  });
 }
