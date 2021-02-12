@@ -10,11 +10,11 @@ export class Admin extends Common {
   @Column({ type: 'text', comment: '用户密码' })
   password: string;
 
-  @Column({ length: 200, nullable: true, comment: '电子邮件' })
-  email: string;
-
   @Column({ type: 'longtext', nullable: true, comment: '特殊授权' })
   permission: string;
+
+  @Column({ length: 200, nullable: true, comment: '电子邮件' })
+  email: string;
 
   @Column({ length: 20, nullable: true, comment: '联系电话' })
   phone: string;
