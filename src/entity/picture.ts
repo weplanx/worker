@@ -1,8 +1,11 @@
-import { Common } from './common';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Id, Status, Timestamp } from '../datatype';
 
 @Entity()
-export class Picture extends Common {
+export class Picture {
+  @PrimaryGeneratedColumn(Id)
+  id: number;
+
   @Column({ type: 'bigint', unsigned: true, default: 0, comment: '分类关联(0为未分类)' })
   type_id: number;
 
@@ -11,4 +14,13 @@ export class Picture extends Common {
 
   @Column({ type: 'text', comment: '元素路径' })
   url: string;
+
+  @Column(Timestamp)
+  create_time: number;
+
+  @Column(Timestamp)
+  update_time: number;
+
+  @Column(Status())
+  status: number;
 }

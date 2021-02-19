@@ -1,9 +1,11 @@
-import { Column, Entity } from 'typeorm';
-import { Status } from '../datatype';
-import { Common } from './common';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Id, Status, Timestamp } from '../datatype';
 
 @Entity()
-export class Resource extends Common {
+export class Resource {
+  @PrimaryGeneratedColumn(Id)
+  id: number;
+
   @Column({ length: 200, unique: true, comment: '资源控制代码' })
   key: string;
 
@@ -27,4 +29,13 @@ export class Resource extends Common {
 
   @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '排序' })
   sort: number;
+
+  @Column(Timestamp)
+  create_time: number;
+
+  @Column(Timestamp)
+  update_time: number;
+
+  @Column(Status())
+  status: number;
 }

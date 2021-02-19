@@ -1,8 +1,11 @@
-import { Column, Entity } from 'typeorm';
-import { Common } from './common';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Id, Status, Timestamp } from '../datatype';
 
 @Entity()
-export class Permission extends Common {
+export class Permission {
+  @PrimaryGeneratedColumn(Id)
+  id: number;
+
   @Column({ length: 200, unique: true, comment: '特殊授权代码' })
   key: string;
 
@@ -11,4 +14,13 @@ export class Permission extends Common {
 
   @Column({ type: 'text', comment: '备注' })
   note: string;
+
+  @Column(Timestamp)
+  create_time: number;
+
+  @Column(Timestamp)
+  update_time: number;
+
+  @Column(Status())
+  status: number;
 }

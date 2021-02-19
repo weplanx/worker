@@ -1,9 +1,11 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Id, Status, Timestamp } from '../datatype';
-import { Common } from './common';
 
 @Entity()
-export class Admin extends Common {
+export class Admin {
+  @PrimaryGeneratedColumn(Id)
+  id: number;
+
   @Column({ length: 50, unique: true, comment: '用户名' })
   username: string;
 
@@ -24,4 +26,13 @@ export class Admin extends Common {
 
   @Column({ type: 'text', nullable: true, comment: '头像' })
   avatar: string;
+
+  @Column(Timestamp)
+  create_time: number;
+
+  @Column(Timestamp)
+  update_time: number;
+
+  @Column(Status())
+  status: number;
 }
