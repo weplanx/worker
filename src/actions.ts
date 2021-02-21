@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { acl } from './seed/acl';
 import { resource } from './seed/resource';
@@ -7,7 +6,14 @@ import { permission } from './seed/permission';
 import { role } from './seed/role';
 import { admin } from './seed/admin';
 
-createConnection().then(async connection => {
+export const sync = async () => {
+  const connection = await createConnection();
+  await connection.synchronize(true);
+  await connection.close();
+};
+
+export const seed = async () => {
+  const connection = await createConnection();
   const vars = {
     time: Math.floor(new Date().getTime() / 1000),
   };
@@ -18,4 +24,4 @@ createConnection().then(async connection => {
   await role(vars);
   await admin(vars);
   await connection.close();
-}).catch(error => console.log(error));
+};
