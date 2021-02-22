@@ -3,7 +3,6 @@ import { parse } from 'yaml';
 import { readFileSync } from 'fs';
 
 export const sync = async (target: string, task: string, option: any) => {
-  console.log(option);
   const configs = parse(readFileSync('./config.yml', 'utf8'));
   if (!configs.hasOwnProperty(target)) {
     console.error('configuration target does not exist');
@@ -22,6 +21,7 @@ export const sync = async (target: string, task: string, option: any) => {
     entityPrefix: config.entityPrefix,
   }));
   await connection.synchronize(option.fresh);
+  await connection.query('drop table if exists typeorm_metadata');
   await connection.close();
 };
 
