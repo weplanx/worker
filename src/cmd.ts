@@ -12,14 +12,22 @@ program
 program.addCommand(
   program
     .createCommand('sync')
-    .description('synchronize database entities')
+    .arguments('<target> <task>')
+    .description('synchronize database entities', {
+      target: 'configuration ID',
+      task: 'sync task, for example: framework',
+    })
     .action(sync),
 );
 
 program.addCommand(
   program
     .createCommand('seed')
-    .description('generate initialization data')
+    .arguments('<target> <task>')
+    .description('generate initialization data', {
+      target: 'configuration ID',
+      task: 'task name',
+    })
     .action(seed),
 );
 

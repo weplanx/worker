@@ -1,20 +1,20 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { Id } from '../datatype';
-import { Role } from './role';
+import { Id } from '@datatype';
+import { Admin } from './admin';
 import { Resource } from './resource';
 
 @Entity()
-@Unique(['role_key', 'resource_key'])
-export class RoleResourceRel {
+@Unique(['admin_id', 'resource_key'])
+export class AdminResourceRel {
   @PrimaryGeneratedColumn(Id)
   id: number;
 
-  @ManyToOne(() => Role, value => value.key, {
+  @ManyToOne(() => Admin, value => value.id, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'role_key', referencedColumnName: 'key' })
-  role_key: string;
+  @JoinColumn({ name: 'admin_id', referencedColumnName: 'id' })
+  admin_id: number;
 
   @ManyToOne(() => Resource, value => value.key, {
     onUpdate: 'CASCADE',
@@ -22,5 +22,4 @@ export class RoleResourceRel {
   })
   @JoinColumn({ name: 'resource_key', referencedColumnName: 'key' })
   resource_key: string;
-
 }

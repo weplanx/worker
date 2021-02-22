@@ -1,8 +1,8 @@
 import { getRepository } from 'typeorm';
 import { argon2id } from 'hash-wasm';
 import { randomBytes } from 'crypto';
-import { Admin } from '../entity/admin';
-import { AdminRoleRel } from '../entity/admin-role-rel';
+import { Admin } from '@entity/framework/admin';
+import { AdminRoleRel } from '@entity/framework/admin-role-rel';
 
 export async function admin(vars: any) {
   const result = await getRepository(Admin).insert(

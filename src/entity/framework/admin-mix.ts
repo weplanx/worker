@@ -15,7 +15,7 @@ import { AdminPolicyMix } from './admin-policy-mix';
       .innerJoin(AdminRoleRel, 'arr', 'a.id = arr.admin_id')
       .leftJoin(AdminResourceRel, 'arer', 'a.id = arer.admin_id')
       .leftJoin(AdminPolicyMix, 'apm', 'a.id = apm.admin_id')
-      .groupBy('a.id, a.username, a.password, a.permission, a.call, a.email, a.phone, a.avatar, a.status, a.create_time, a.update_time')
+      .groupBy('a.id')
   ),
 })
 export class adminMix {

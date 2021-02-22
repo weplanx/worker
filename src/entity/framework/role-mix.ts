@@ -12,7 +12,7 @@ import { RolePolicyMix } from './role-policy-mix';
       .from(Role, 'r')
       .leftJoin(RoleResourceRel, 'rrr', 'r.key = rrr.role_key')
       .leftJoin(RolePolicyMix, 'rpm', 'r.key = rpm.role_key')
-      .groupBy('r.id, r.key, r.name, r.permission, r.note, r.status, r.create_time, r.update_time')
+      .groupBy('r.id')
   ),
 })
 export class RoleMix {

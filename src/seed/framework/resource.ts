@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Resource } from '../entity/resource';
+import { Resource } from '@entity/framework/resource';
 
 export async function resource(vars: any) {
   await getRepository(Resource).insert([

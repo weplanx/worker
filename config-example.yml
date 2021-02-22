@@ -1,0 +1,2 @@
+default:
+  url: mysql://root:@localhost:3306/mylab?charset=utf8mb4

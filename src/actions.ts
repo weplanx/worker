@@ -1,27 +1,53 @@
-import { createConnection } from 'typeorm';
-import { acl } from './seed/acl';
-import { resource } from './seed/resource';
-import { policy } from './seed/policy';
-import { permission } from './seed/permission';
-import { role } from './seed/role';
-import { admin } from './seed/admin';
+import { ConnectionOptions, createConnection } from 'typeorm';
+import { parse } from 'yaml';
+import { readFileSync } from 'fs';
 
-export const sync = async () => {
-  const connection = await createConnection();
+export const sync = async (target: string, task: string) => {
+  const configs = parse(readFileSync('./config.yml', 'utf8'));
+  if (!configs.hasOwnProperty(target)) {
+    console.error('configuration target does not exist');
+    return;
+  }
+  const config = configs[target];
+  const option: ConnectionOptions = Object.assign({
+    synchronize: false,
+    logging: true,
+    entities: [
+      `src/entity/${task}/*.ts`,
+    ],
+  }, <ConnectionOptions>{
+    type: config.type,
+    url: config.url,
+    entityPrefix: config.entityPrefix,
+  });
+  const connection = await createConnection(option);
   await connection.synchronize(true);
   await connection.close();
 };
 
-export const seed = async () => {
-  const connection = await createConnection();
+export const seed = async (target: string, task: string) => {
+  const configs = parse(readFileSync('./config.yml', 'utf8'));
+  if (!configs.hasOwnProperty(target)) {
+    console.error('configuration target does not exist');
+    return;
+  }
+  const config = configs[target];
+  const option: ConnectionOptions = Object.assign({
+    synchronize: false,
+    logging: true,
+    entities: [
+      `src/entity/${task}/*.ts`,
+    ],
+  }, <ConnectionOptions>{
+    type: config.type,
+    url: config.url,
+    entityPrefix: config.entityPrefix,
+  });
+  const connection = await createConnection(option);
   const vars = {
     time: Math.floor(new Date().getTime() / 1000),
   };
-  await acl(vars);
-  await resource(vars);
-  await policy(vars);
-  await permission(vars);
-  await role(vars);
-  await admin(vars);
+  const loader = await import('./seed/' + task);
+  await loader.bootstrap(connection, vars);
   await connection.close();
 };

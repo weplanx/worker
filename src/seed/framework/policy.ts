@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Policy } from '../entity/policy';
+import { Policy } from '@entity/framework/policy';
 
 
 export async function policy(vars: any) {

@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Id, Status, Timestamp } from '../datatype';
+import { Id, Status, Timestamp } from '@datatype';
 
 @Entity()
 export class Video {

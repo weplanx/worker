@@ -11,6 +11,14 @@
     "outDir": "./build",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "@datatype": [
+        "src/datatype.ts"
+      ],
+      "@entity/framework/*": [
+        "src/entity/framework/*"
+      ]
+    }
   }
 }

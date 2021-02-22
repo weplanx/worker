@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Acl } from '../entity/acl';
+import { Acl } from '@entity/framework/acl';
 
 export async function acl(vars: any) {
   await getRepository(Acl).insert([
