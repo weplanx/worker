@@ -13,6 +13,7 @@ program.addCommand(
   program
     .createCommand('sync')
     .arguments('<target> <task>')
+    .option('--fresh <fresh>', 'drop before sync', false)
     .description('synchronize database entities', {
       target: 'configuration ID',
       task: 'sync task, for example: framework',

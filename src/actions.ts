@@ -2,14 +2,15 @@ import { ConnectionOptions, createConnection } from 'typeorm';
 import { parse } from 'yaml';
 import { readFileSync } from 'fs';
 
-export const sync = async (target: string, task: string) => {
+export const sync = async (target: string, task: string, option: any) => {
+  console.log(option);
   const configs = parse(readFileSync('./config.yml', 'utf8'));
   if (!configs.hasOwnProperty(target)) {
     console.error('configuration target does not exist');
     return;
   }
   const config = configs[target];
-  const option: ConnectionOptions = Object.assign({
+  const connection = await createConnection(Object.assign({
     synchronize: false,
     logging: true,
     entities: [
@@ -19,9 +20,8 @@ export const sync = async (target: string, task: string) => {
     type: config.type,
     url: config.url,
     entityPrefix: config.entityPrefix,
-  });
-  const connection = await createConnection(option);
-  await connection.synchronize(true);
+  }));
+  await connection.synchronize(option.fresh);
   await connection.close();
 };
 
@@ -32,18 +32,17 @@ export const seed = async (target: string, task: string) => {
     return;
   }
   const config = configs[target];
-  const option: ConnectionOptions = Object.assign({
+  const connection = await createConnection(Object.assign({
     synchronize: false,
     logging: true,
     entities: [
-      `src/entity/${task}/*.ts`,
+      `src/entity/**/*.ts`,
     ],
   }, <ConnectionOptions>{
     type: config.type,
     url: config.url,
     entityPrefix: config.entityPrefix,
-  });
-  const connection = await createConnection(option);
+  }));
   const vars = {
     time: Math.floor(new Date().getTime() / 1000),
   };
