@@ -49,25 +49,5 @@ export async function policy(vars: any) {
       acl_key: 'role',
       policy: 0,
     },
-    {
-      resource_key: 'picture',
-      acl_key: 'picture',
-      policy: 1,
-    },
-    {
-      resource_key: 'picture',
-      acl_key: 'picture_type',
-      policy: 1,
-    },
-    {
-      resource_key: 'video',
-      acl_key: 'video',
-      policy: 1,
-    },
-    {
-      resource_key: 'picture',
-      acl_key: 'video_type',
-      policy: 1,
-    },
   ]);
 }
