@@ -4,6 +4,7 @@
     "start": "ts-node -r tsconfig-paths/register src/cmd.ts",
     "sync:framework": "npm start sync default framework -- --fresh true",
     "seed:framework": "npm start seed default framework",
+    "sync:logger": "npm start sync default logger",
     "sync:media": "npm start sync default media",
     "seed:media": "npm start seed default media",
     "build": "rimraf dist && tsc && cpy package.json dist"
