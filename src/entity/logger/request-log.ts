@@ -2,7 +2,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Id, Timestamp } from '@datatype';
 
 @Entity()
-export class Logger {
+export class RequestLog {
   @PrimaryGeneratedColumn(Id)
   id: number;
 
