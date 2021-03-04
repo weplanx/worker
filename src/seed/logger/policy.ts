@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
+import { EntityManager, getRepository } from 'typeorm';
 import { Policy } from '@entity/framework/policy';
 
 
-export async function policy(vars: any) {
+export async function policy(entityManager: EntityManager, vars: any) {
   await getRepository(Policy).insert([
     {
       resource_key: 'request-log',

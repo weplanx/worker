@@ -4,7 +4,10 @@ import { policy } from './cms/policy';
 import { Connection } from 'typeorm';
 
 export const bootstrap = async (connection: Connection, vars: any) => {
-  await acl(vars);
-  await resource(vars);
-  await policy(vars);
+  await connection.transaction(async entityManager => {
+    await acl(entityManager, vars);
+    await resource(entityManager, vars);
+    await policy(entityManager, vars);
+  });
+
 };

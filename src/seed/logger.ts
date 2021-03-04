@@ -6,20 +6,23 @@ import { Resource } from '@entity/framework/resource';
 import { RoleResourceRel } from '@entity/framework/role-resource-rel';
 
 export const bootstrap = async (connection: Connection, vars: any) => {
-  await acl(vars);
-  await resource(vars);
-  await policy(vars);
-
-  await getRepository(RoleResourceRel).delete({
-    role_key: '*',
+  await connection.transaction(async entityManager => {
+    await acl(entityManager, vars);
+    await resource(entityManager, vars);
+    await policy(entityManager, vars);
   });
-  const keys = await getRepository(Resource).find({
-    select: ['key'],
-  });
-  await getRepository(RoleResourceRel).insert(
-    keys.map(v => ({
+  await connection.transaction(async entityManager => {
+    await entityManager.getRepository(RoleResourceRel).delete({
       role_key: '*',
-      resource_key: v.key,
-    })),
-  );
+    });
+    const keys = await getRepository(Resource).find({
+      select: ['key'],
+    });
+    await entityManager.getRepository(RoleResourceRel).insert(
+      keys.map(v => ({
+        role_key: '*',
+        resource_key: v.key,
+      })),
+    );
+  });
 };

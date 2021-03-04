@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { Acl } from '@entity/framework/acl';
 
-export async function acl(vars: any) {
-  await getRepository(Acl).insert([
+export async function acl(entityManager: EntityManager, vars: any) {
+  await entityManager.getRepository(Acl).insert([
     {
       key: 'resource',
       name: { zh_cn: '资源控制模块', en_us: 'Resource Module' },

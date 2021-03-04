@@ -1,10 +1,10 @@
-import { getRepository } from 'typeorm';
+import { EntityManager, getRepository } from 'typeorm';
 import { Role } from '@entity/framework/role';
 import { Resource } from '@entity/framework/resource';
 import { RoleResourceRel } from '@entity/framework/role-resource-rel';
 
-export async function role(vars: any) {
-  await getRepository(Role).insert([
+export async function role(entityManager: EntityManager, vars: any) {
+  await entityManager.getRepository(Role).insert([
     {
       key: '*',
       name: { zh_cn: '超级管理员', en_us: 'Super' },
@@ -17,7 +17,7 @@ export async function role(vars: any) {
     select: ['key'],
   });
 
-  await getRepository(RoleResourceRel).insert(
+  await entityManager.getRepository(RoleResourceRel).insert(
     keys.map(v => ({
       role_key: '*',
       resource_key: v.key,

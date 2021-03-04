@@ -1,7 +1,7 @@
-import { getRepository } from 'typeorm';
+import { EntityManager, getRepository } from 'typeorm';
 import { Resource } from '@entity/framework/resource';
 
-export async function resource(vars: any) {
+export async function resource(entityManager: EntityManager, vars: any) {
   await getRepository(Resource).insert([
     {
       key: 'logger',

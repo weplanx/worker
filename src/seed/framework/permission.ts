@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
+import { EntityManager } from 'typeorm';
 import { Permission } from '@entity/framework/permission';
 
-export async function permission(vars: any) {
-  await getRepository(Permission).insert([
+export async function permission(entityManager: EntityManager, vars: any) {
+  await entityManager.getRepository(Permission).insert([
     {
       key: 'privacy',
       name: { zh_cn: '数据脱敏', en_us: 'Privacy' },

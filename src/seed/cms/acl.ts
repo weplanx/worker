@@ -1,8 +1,8 @@
-import { getRepository } from 'typeorm';
+import { EntityManager, getRepository } from 'typeorm';
 import { Acl } from '@entity/framework/acl';
 
-export async function acl(vars: any) {
-  await getRepository(Acl).insert([
+export async function acl(entityManager: EntityManager, vars: any) {
+  await entityManager.getRepository(Acl).insert([
     {
       key: 'picture_type',
       name: { zh_cn: '图片素材分类模块', en_us: 'Picture Type Module' },

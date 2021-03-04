@@ -1,7 +1,7 @@
-import { getRepository } from 'typeorm';
+import { EntityManager, getRepository } from 'typeorm';
 import { Acl } from '@entity/framework/acl';
 
-export async function acl(vars: any) {
+export async function acl(entityManager: EntityManager, vars: any) {
   await getRepository(Acl).insert([
     {
       key: 'request_log',

@@ -7,10 +7,12 @@ import { Connection } from 'typeorm';
 import { permission } from './framework/permission';
 
 export const bootstrap = async (connection: Connection, vars: any) => {
-  await acl(vars);
-  await resource(vars);
-  await policy(vars);
-  await permission(vars);
-  await role(vars);
-  await admin(vars);
+  await connection.transaction(async entityManager => {
+    await acl(entityManager, vars);
+    await resource(entityManager, vars);
+    await policy(entityManager, vars);
+    await permission(entityManager, vars);
+    await role(entityManager, vars);
+    await admin(entityManager, vars);
+  });
 };
