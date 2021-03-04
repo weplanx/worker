@@ -1,6 +1,6 @@
-import { acl } from './media/acl';
-import { resource } from './media/resource';
-import { policy } from './media/policy';
+import { acl } from './cms/acl';
+import { resource } from './cms/resource';
+import { policy } from './cms/policy';
 import { Connection } from 'typeorm';
 
 export const bootstrap = async (connection: Connection, vars: any) => {
