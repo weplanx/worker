@@ -27,12 +27,12 @@ export class Admin {
   @Column({ type: 'text', nullable: true, comment: '头像' })
   avatar: string;
 
+  @Column(Status())
+  status: number;
+
   @Column(Timestamp)
   create_time: number;
 
   @Column(Timestamp)
   update_time: number;
-
-  @Column(Status())
-  status: number;
 }

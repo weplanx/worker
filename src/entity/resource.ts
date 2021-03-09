@@ -30,12 +30,12 @@ export class Resource {
   @Column({ type: 'tinyint', unsigned: true, default: 0, comment: '排序' })
   sort: number;
 
+  @Column(Status())
+  status: number;
+
   @Column(Timestamp)
   create_time: number;
 
   @Column(Timestamp)
   update_time: number;
-
-  @Column(Status())
-  status: number;
 }
