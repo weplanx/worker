@@ -1,7 +1,8 @@
 import { EntityManager } from 'typeorm';
 import { Permission } from '../entity/permission';
+import { SeedOption } from '@type';
 
-export async function permission(entityManager: EntityManager, vars: any) {
+export async function permission({ entityManager, vars }: SeedOption) {
   await entityManager.getRepository(Permission).insert([
     {
       key: 'privacy',

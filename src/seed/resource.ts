@@ -1,7 +1,8 @@
 import { EntityManager } from 'typeorm';
 import { Resource } from '../entity/resource';
+import { SeedOption } from '@type';
 
-export async function resource(entityManager: EntityManager, vars: any) {
+export async function resource({ entityManager, vars }: SeedOption) {
   await entityManager.getRepository(Resource).insert([
     {
       key: 'system',

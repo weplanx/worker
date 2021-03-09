@@ -13,8 +13,8 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "paths": {
-      "@datatype": [
-        "src/datatype.ts"
+      "@type": [
+        "src/type.ts"
       ]
     }
   }

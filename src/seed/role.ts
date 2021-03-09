@@ -2,8 +2,9 @@ import { EntityManager, getRepository } from 'typeorm';
 import { Role } from '../entity/role';
 import { Resource } from '../entity/resource';
 import { RoleResourceRel } from '../entity/role-resource-rel';
+import { SeedOption } from '@type';
 
-export async function role(entityManager: EntityManager, vars: any) {
+export async function role({ entityManager, vars }: SeedOption) {
   await entityManager.getRepository(Role).insert([
     {
       key: '*',

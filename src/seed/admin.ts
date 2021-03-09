@@ -3,8 +3,9 @@ import { argon2id } from 'hash-wasm';
 import { randomBytes } from 'crypto';
 import { Admin } from '../entity/admin';
 import { AdminRoleRel } from '../entity/admin-role-rel';
+import { SeedOption } from '@type';
 
-export async function admin(entityManager: EntityManager, vars: any) {
+export async function admin({ entityManager, vars }: SeedOption) {
   const result = await entityManager.getRepository(Admin).insert(
     {
       username: 'super',

@@ -6,7 +6,7 @@ import {
   ManyToOne,
   Unique,
 } from 'typeorm';
-import { Status, Id } from '@datatype';
+import { Status, Id } from '@type';
 import { Resource } from './resource';
 import { Acl } from './acl';
 

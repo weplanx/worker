@@ -1,5 +1,5 @@
 import { Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { Id } from '@datatype';
+import { Id } from '@type';
 import { Role } from './role';
 import { Resource } from './resource';
 

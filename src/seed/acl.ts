@@ -1,7 +1,8 @@
 import { EntityManager } from 'typeorm';
 import { Acl } from '../entity/acl';
+import { SeedOption } from '@type';
 
-export async function acl(entityManager: EntityManager, vars: any) {
+export async function acl({ entityManager, vars }: SeedOption) {
   await entityManager.getRepository(Acl).insert([
     {
       key: 'resource',

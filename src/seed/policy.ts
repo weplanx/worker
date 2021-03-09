@@ -1,8 +1,9 @@
 import { EntityManager } from 'typeorm';
 import { Policy } from '../entity/policy';
+import { SeedOption } from '@type';
 
 
-export async function policy(entityManager: EntityManager, vars: any) {
+export async function policy({ entityManager, vars }: SeedOption) {
   await entityManager.getRepository(Policy).insert([
     {
       resource_key: 'acl-index',
