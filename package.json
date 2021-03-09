@@ -2,7 +2,7 @@
   "name": "migrations",
   "scripts": {
     "sync": "ts-node -r tsconfig-paths/register src/sync.ts",
-    "seed": "npm start seed default framework"
+    "seed": "ts-node -r tsconfig-paths/register src/seed.ts"
   },
   "dependencies": {
     "hash-wasm": "^4.4.1",

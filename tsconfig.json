@@ -15,9 +15,6 @@
     "paths": {
       "@datatype": [
         "src/datatype.ts"
-      ],
-      "@entity/framework/*": [
-        "src/entity/framework/*"
       ]
     }
   }
