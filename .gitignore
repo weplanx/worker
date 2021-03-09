@@ -6,3 +6,4 @@ tmp/
 temp/
 package-lock.json
 config.yml
+ormconfig.json

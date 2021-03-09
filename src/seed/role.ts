@@ -1,7 +1,7 @@
 import { EntityManager, getRepository } from 'typeorm';
-import { Role } from '@entity/framework/role';
-import { Resource } from '@entity/framework/resource';
-import { RoleResourceRel } from '@entity/framework/role-resource-rel';
+import { Role } from '../entity/role';
+import { Resource } from '../entity/resource';
+import { RoleResourceRel } from '../entity/role-resource-rel';
 
 export async function role(entityManager: EntityManager, vars: any) {
   await entityManager.getRepository(Role).insert([

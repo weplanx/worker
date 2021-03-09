@@ -18,12 +18,12 @@ export class Acl {
   @Column({ type: 'longtext', nullable: true, comment: '读取控制项' })
   read: string;
 
+  @Column(Status())
+  status: number;
+
   @Column(Timestamp)
   create_time: number;
 
   @Column(Timestamp)
   update_time: number;
-
-  @Column(Status())
-  status: number;
 }

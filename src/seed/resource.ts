@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { Resource } from '@entity/framework/resource';
+import { Resource } from '../entity/resource';
 
 export async function resource(entityManager: EntityManager, vars: any) {
   await entityManager.getRepository(Resource).insert([

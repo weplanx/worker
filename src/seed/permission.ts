@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm';
-import { Permission } from '@entity/framework/permission';
+import { Permission } from '../entity/permission';
 
 export async function permission(entityManager: EntityManager, vars: any) {
   await entityManager.getRepository(Permission).insert([
