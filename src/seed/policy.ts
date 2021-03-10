@@ -50,5 +50,35 @@ export async function policy({ entityManager, vars }: SeedOption) {
       acl_key: 'role',
       policy: 0,
     },
+    {
+      resource_key: 'picture',
+      acl_key: 'picture',
+      policy: 1,
+    },
+    {
+      resource_key: 'picture',
+      acl_key: 'picture_type',
+      policy: 1,
+    },
+    {
+      resource_key: 'video',
+      acl_key: 'video',
+      policy: 1,
+    },
+    {
+      resource_key: 'video',
+      acl_key: 'video_type',
+      policy: 1,
+    },
+    {
+      resource_key: 'audio',
+      acl_key: 'audio',
+      policy: 1,
+    },
+    {
+      resource_key: 'audio',
+      acl_key: 'audio_type',
+      policy: 1,
+    },
   ]);
 }
