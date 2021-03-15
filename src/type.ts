@@ -1,5 +1,5 @@
 import { PrimaryGeneratedColumnNumericOptions } from 'typeorm/decorator/options/PrimaryGeneratedColumnNumericOptions';
-import { ColumnOptions, EntityManager } from 'typeorm';
+import { ColumnOptions } from 'typeorm';
 
 export const Id: PrimaryGeneratedColumnNumericOptions = {
   type: 'bigint',
@@ -21,9 +21,3 @@ export function Status(value = 1, comment?: string): ColumnOptions {
     comment,
   };
 }
-
-export type SeedOption = {
-  entityManager: EntityManager;
-  vars: any;
-};
-

@@ -1,12 +1,11 @@
-import { EntityManager } from 'typeorm';
 import { argon2id } from 'hash-wasm';
 import { randomBytes } from 'crypto';
 import { Admin } from '../entity/admin';
 import { AdminRoleRel } from '../entity/admin-role-rel';
-import { SeedOption } from '@type';
+import { getRepository } from 'typeorm';
 
-export async function admin({ entityManager, vars }: SeedOption) {
-  const result = await entityManager.getRepository(Admin).insert(
+export async function admin(vars: any) {
+  const result = await getRepository(Admin).insert(
     {
       username: 'super',
       password: await argon2id({
@@ -23,7 +22,7 @@ export async function admin({ entityManager, vars }: SeedOption) {
       update_time: vars.time,
     },
   );
-  await entityManager.getRepository(AdminRoleRel).insert({
+  await getRepository(AdminRoleRel).insert({
     admin_id: result.identifiers[0].id,
     role_key: '*',
   });
