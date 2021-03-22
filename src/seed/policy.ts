@@ -50,6 +50,26 @@ export async function policy(vars: any) {
       policy: 0,
     },
     {
+      resource_key: 'request-log',
+      acl_key: 'request_log',
+      policy: 1,
+    },
+    {
+      resource_key: 'login-log',
+      acl_key: 'login_log',
+      policy: 1,
+    },
+    {
+      resource_key: 'schema-index',
+      acl_key: 'schema',
+      policy: 1,
+    },
+    {
+      resource_key: 'schema-index',
+      acl_key: 'column',
+      policy: 1,
+    },
+    {
       resource_key: 'picture',
       acl_key: 'picture',
       policy: 1,
