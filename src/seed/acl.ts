@@ -59,22 +59,6 @@ export async function acl(vars: any) {
       update_time: vars.time,
     },
     {
-      key: 'schema',
-      name: { zh_cn: '内容模型', en_us: 'Schema' },
-      write: 'add,edit,delete',
-      read: 'get,lists,originLists',
-      create_time: vars.time,
-      update_time: vars.time,
-    },
-    {
-      key: 'column',
-      name: { zh_cn: '内容字段', en_us: 'Column' },
-      write: 'update',
-      read: 'originLists',
-      create_time: vars.time,
-      update_time: vars.time,
-    },
-    {
       key: 'login_log',
       name: { zh_cn: '登录日志', en_us: 'Login Log' },
       read: 'lists',

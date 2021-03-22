@@ -60,16 +60,6 @@ export async function policy(vars: any) {
       policy: 1,
     },
     {
-      resource_key: 'schema-index',
-      acl_key: 'schema',
-      policy: 1,
-    },
-    {
-      resource_key: 'schema-index',
-      acl_key: 'column',
-      policy: 1,
-    },
-    {
       resource_key: 'picture',
       acl_key: 'picture',
       policy: 1,
