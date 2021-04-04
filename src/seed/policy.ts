@@ -89,5 +89,15 @@ export async function policy(vars: any) {
       acl_key: 'audio_type',
       policy: 1,
     },
+    {
+      resource_key: 'shop-index',
+      acl_key: 'shop',
+      policy: 1,
+    },
+    {
+      resource_key: 'shop-index',
+      acl_key: 'product',
+      policy: 1,
+    },
   ]);
 }

@@ -113,5 +113,21 @@ export async function acl(vars: any) {
       create_time: vars.time,
       update_time: vars.time,
     },
+    {
+      key: 'shop',
+      name: { zh_cn: '商户模块', en_us: 'Shop Module' },
+      write: 'add,edit,delete',
+      read: 'get,originLists,lists',
+      create_time: vars.time,
+      update_time: vars.time,
+    },
+    {
+      key: 'product',
+      name: { zh_cn: '产品模块', en_us: 'Product Module' },
+      write: 'add,edit,delete',
+      read: 'get,originLists,lists',
+      create_time: vars.time,
+      update_time: vars.time,
+    },
   ]);
 }
