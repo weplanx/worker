@@ -60,32 +60,32 @@ export async function policy(vars: any) {
       policy: 1,
     },
     {
-      resource_key: 'picture',
+      resource_key: 'media/picture',
       acl_key: 'picture',
       policy: 1,
     },
     {
-      resource_key: 'picture',
+      resource_key: 'media/picture',
       acl_key: 'picture_type',
       policy: 1,
     },
     {
-      resource_key: 'video',
+      resource_key: 'media/video',
       acl_key: 'video',
       policy: 1,
     },
     {
-      resource_key: 'video',
+      resource_key: 'media/video',
       acl_key: 'video_type',
       policy: 1,
     },
     {
-      resource_key: 'audio',
+      resource_key: 'media/audio',
       acl_key: 'audio',
       policy: 1,
     },
     {
-      resource_key: 'audio',
+      resource_key: 'media/audio',
       acl_key: 'audio_type',
       policy: 1,
     },
