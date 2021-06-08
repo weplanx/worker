@@ -7,7 +7,7 @@ import { getRepository } from 'typeorm';
 export async function admin(vars: any) {
   const result = await getRepository(Admin).insert(
     {
-      username: 'super',
+      username: 'kain',
       password: await argon2id({
         password: 'pass@VAN1234',
         salt: randomBytes(16),

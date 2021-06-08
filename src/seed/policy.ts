@@ -50,13 +50,13 @@ export async function policy(vars: any) {
       policy: 0,
     },
     {
-      resource_key: 'request-log',
-      acl_key: 'request_log',
+      resource_key: 'logs',
+      acl_key: 'logs',
       policy: 1,
     },
     {
-      resource_key: 'login-log',
-      acl_key: 'login_log',
+      resource_key: 'activities',
+      acl_key: 'activities',
       policy: 1,
     },
     {
@@ -87,16 +87,6 @@ export async function policy(vars: any) {
     {
       resource_key: 'media/audio',
       acl_key: 'audio_type',
-      policy: 1,
-    },
-    {
-      resource_key: 'shop-index',
-      acl_key: 'shop',
-      policy: 1,
-    },
-    {
-      resource_key: 'shop-index',
-      acl_key: 'product',
       policy: 1,
     },
   ]);
