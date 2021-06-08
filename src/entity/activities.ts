@@ -24,13 +24,20 @@ export class Activities {
   @Column({ type: 'varchar', length: 50, comment: '省' })
   province: string;
 
-  city_id: string;
+  @Column({ type: 'smallint', comment: '城市编码', default: 0 })
+  city_id: number;
 
-  @Column({ type: 'json', comment: 'ISP信息' })
-  isp: object;
+  @Column({ type: 'varchar', length: 50, comment: '城市' })
+  city: string;
 
-  @Column(Status(0, '已登录'))
+  @Column({ type: 'varchar', length: 50, comment: 'ISP信息' })
+  isp: string;
+
+  @Column(Status(0, '登录状态'))
   logged: number;
+
+  @Column({ type: 'text', nullable: true, comment: 'User Agent' })
+  device: string;
 
   @Column({ type: 'text', nullable: true, comment: '失败密码记录' })
   password: string;
