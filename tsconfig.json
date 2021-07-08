@@ -1,11 +1,21 @@
 {
   "compilerOptions": {
-    "sourceMap": true,
-    "outDir": "dist",
-    "strict": true,
+    "baseUrl": ".",
     "lib": [
-      "esnext"
+      "es5",
+      "es6"
     ],
-    "esModuleInterop": true
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "paths": {
+      "@type": [
+        "src/type.ts"
+      ]
+    }
   }
 }

@@ -5,4 +5,5 @@ build/
 tmp/
 temp/
 package-lock.json
-.env
+config.yml
+ormconfig.json
