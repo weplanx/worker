@@ -1,3 +1,3 @@
-# lab-migrations
+# lab migrations
 
-数据库迁移方案
+Database migration plan
