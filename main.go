@@ -1,13 +1,21 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"go.uber.org/fx"
+	"lab-serverless/app/api"
+	"lab-serverless/bootstrap"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run(":9000")
+	fx.New(
+		fx.NopLogger,
+		fx.Provide(
+			bootstrap.LoadConfiguration,
+			bootstrap.InitializeDatabase,
+			bootstrap.InitializeCookie,
+			bootstrap.InitializeAuthx,
+			bootstrap.HttpServer,
+		),
+		api.App,
+	).Run()
 }
