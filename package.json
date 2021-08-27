@@ -1,20 +1,7 @@
 {
-  "name": "migrations",
+  "name": "lab-serverless",
   "scripts": {
-    "sync": "ts-node -r tsconfig-paths/register src/sync.ts",
-    "seed": "ts-node -r tsconfig-paths/register src/seed.ts"
-  },
-  "dependencies": {
-    "hash-wasm": "^4.4.1",
-    "mysql2": "^2.2.5",
-    "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.2.30"
-  },
-  "devDependencies": {
-    "@types/node": "^14.14.25",
-    "prettier": "^2.2.1",
-    "ts-node": "^9.1.1",
-    "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.1.3"
+    "build": "go build -tags=jsoniter -o dist/scf_bootstrap main.go",
+    "deploy": "npm run build && serverless deploy"
   }
 }
