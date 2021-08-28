@@ -9,7 +9,7 @@ import (
 	"github.com/kainonly/go-bit/cookie"
 	"go.uber.org/fx"
 	"gopkg.in/yaml.v2"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 	"io/ioutil"
@@ -37,11 +37,11 @@ func LoadConfiguration() (config config.Config, err error) {
 	return
 }
 
-// InitializeDatabase 初始化 Mysql 数据库
+// InitializeDatabase 初始化数据库
 // 配置文档 https://gorm.io/docs/connecting_to_the_database.html
 func InitializeDatabase(config config.Config) (db *gorm.DB, err error) {
 	option := config.Database
-	db, err = gorm.Open(mysql.Open(option.Dsn), &gorm.Config{
+	db, err = gorm.Open(postgres.Open(option.Dsn), &gorm.Config{
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
 		NamingStrategy: schema.NamingStrategy{
