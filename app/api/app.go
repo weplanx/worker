@@ -14,8 +14,18 @@ type Dependency struct {
 	fx.In
 
 	*controller.Index
+	*controller.User
 }
 
 func Routes(r *gin.Engine, d Dependency) {
 	r.GET("/", mvc.Bind(d.Index.Index))
+	user := r.Group("user")
+	{
+		user.POST("originLists", mvc.Bind(d.User.OriginLists))
+		user.POST("lists", mvc.Bind(d.User.Lists))
+		user.POST("get", mvc.Bind(d.User.Get))
+		user.POST("add", mvc.Bind(d.User.Add))
+		user.POST("edit", mvc.Bind(d.User.Edit))
+		user.POST("delete", mvc.Bind(d.User.Delete))
+	}
 }
