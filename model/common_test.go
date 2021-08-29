@@ -2,7 +2,7 @@ package model
 
 import (
 	"gorm.io/gorm"
-	"lab-api/bootstrap"
+	"lab-serverless/bootstrap"
 	"log"
 	"os"
 	"testing"
