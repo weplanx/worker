@@ -1,14 +1,19 @@
 package common
 
-import (
-	"github.com/kainonly/go-bit/authx"
-	"github.com/kainonly/go-bit/cookie"
-)
-
 type Config struct {
-	App      App                    `yaml:"app"`
-	Database Database               `yaml:"database"`
-	Cookie   cookie.Option          `yaml:"cookie"`
-	Cors     []string               `yaml:"cors"`
-	Auth     map[string]*authx.Auth `yaml:"auth"`
+	App      App
+	Database Database
+	Cors     []string `env:"CORS" envSeparator:","`
+}
+
+type App struct {
+	Name string `env:"APP_NAME"`
+	Key  string `env:"APP_KEY"`
+}
+
+type Database struct {
+	Dsn             string `env:"DB_DSN"`
+	MaxIdleConns    int    `env:"DB_MAX_IDLE_CONNS" envDefault:"5"`
+	MaxOpenConns    int    `env:"DB_MAX_OPEN_CONNS" envDefault:"10"`
+	ConnMaxLifetime int    `env:"DB_CONN_MAX_LIFETIME" envDefault:"3600"`
 }

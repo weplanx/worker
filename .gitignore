@@ -23,6 +23,6 @@
 
 /node_modules
 /package-lock.json
-/config.yml
+/serverless.yml
 /.env
 /dist

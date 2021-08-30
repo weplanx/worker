@@ -54,7 +54,6 @@ func InitializeDatabase(config common.Config) (db *gorm.DB, err error) {
 		SkipDefaultTransaction: true,
 		PrepareStmt:            true,
 		NamingStrategy: schema.NamingStrategy{
-			TablePrefix:   option.TablePrefix,
 			SingularTable: true,
 		},
 	})
