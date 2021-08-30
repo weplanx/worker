@@ -4,7 +4,7 @@ import (
 	"github.com/kainonly/go-bit/cookie"
 	"go.uber.org/fx"
 	"gorm.io/gorm"
-	"lab-serverless/app/api/service"
+	"lab-serverless/app/scf/service"
 )
 
 type Dependency struct {

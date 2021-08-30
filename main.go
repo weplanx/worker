@@ -2,7 +2,7 @@ package main
 
 import (
 	"go.uber.org/fx"
-	"lab-serverless/app/api"
+	"lab-serverless/app/scf"
 	"lab-serverless/bootstrap"
 )
 
@@ -16,6 +16,6 @@ func main() {
 			bootstrap.InitializeAuthx,
 			bootstrap.HttpServer,
 		),
-		api.App,
+		scf.App,
 	).Run()
 }
