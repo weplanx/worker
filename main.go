@@ -1,21 +1,11 @@
 package main
 
-import (
-	"go.uber.org/fx"
-	"lab-serverless/app/scf"
-	"lab-serverless/bootstrap"
-)
+import "log"
 
 func main() {
-	fx.New(
-		fx.NopLogger,
-		fx.Provide(
-			bootstrap.LoadConfiguration,
-			bootstrap.InitializeDatabase,
-			bootstrap.InitializeCookie,
-			bootstrap.InitializeAuthx,
-			bootstrap.HttpServer,
-		),
-		scf.App,
-	).Run()
+	app, err := App()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	app.Run()
 }

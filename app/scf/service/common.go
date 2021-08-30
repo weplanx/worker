@@ -1,18 +1,17 @@
 package service
 
 import (
-	"go.uber.org/fx"
+	"github.com/google/wire"
 	"gorm.io/gorm"
 	"lab-serverless/config"
 )
 
 type Dependency struct {
-	fx.In
-
 	Config config.Config
 	Db     *gorm.DB
 }
 
-var Provides = fx.Provide(
+var Provides = wire.NewSet(
+	wire.Struct(new(Dependency), "*"),
 	NewIndex,
 )

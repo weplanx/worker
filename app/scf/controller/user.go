@@ -10,9 +10,9 @@ type User struct {
 	*crud.Crud
 }
 
-func NewUser(d Dependency) *User {
+func NewUser(d *Dependency) *User {
 	return &User{
-		Dependency: &d,
+		Dependency: d,
 		Crud:       crud.New(d.Db, model.User{}),
 	}
 }
