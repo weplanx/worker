@@ -15,3 +15,11 @@ func NewIndex(d *Dependency) *Index {
 func (x *Index) Index(c *gin.Context) interface{} {
 	return x.IndexService.Version()
 }
+
+func (x *Index) Resource(c *gin.Context) interface{} {
+	data, err := x.ResourceService.Fetch(c)
+	if err != nil {
+		return err
+	}
+	return data
+}

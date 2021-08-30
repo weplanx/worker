@@ -14,4 +14,5 @@ type Dependency struct {
 var Provides = wire.NewSet(
 	wire.Struct(new(Dependency), "*"),
 	NewIndex,
+	NewResource,
 )

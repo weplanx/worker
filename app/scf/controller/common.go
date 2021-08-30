@@ -9,7 +9,8 @@ import (
 type Dependency struct {
 	Db *gorm.DB
 
-	IndexService *service.Index
+	IndexService    *service.Index
+	ResourceService *service.Resource
 }
 
 var Provides = wire.NewSet(

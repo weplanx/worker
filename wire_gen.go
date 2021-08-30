@@ -11,14 +11,15 @@ import (
 	"lab-serverless/app/scf"
 	"lab-serverless/app/scf/controller"
 	"lab-serverless/app/scf/service"
+	"lab-serverless/bootstrap"
 	"lab-serverless/common"
 )
 
 // Injectors from wire.go:
 
 func App(config common.Config) (*app.App, error) {
-	engine := app.HttpServer(config)
-	db, err := app.InitializeDatabase(config)
+	engine := bootstrap.HttpServer(config)
+	db, err := bootstrap.InitializeDatabase(config)
 	if err != nil {
 		return nil, err
 	}
@@ -27,9 +28,11 @@ func App(config common.Config) (*app.App, error) {
 		Db:     db,
 	}
 	index := service.NewIndex(dependency)
+	resource := service.NewResource(dependency)
 	controllerDependency := &controller.Dependency{
-		Db:           db,
-		IndexService: index,
+		Db:              db,
+		IndexService:    index,
+		ResourceService: resource,
 	}
 	controllerIndex := controller.NewIndex(controllerDependency)
 	user := controller.NewUser(controllerDependency)

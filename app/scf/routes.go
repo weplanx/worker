@@ -24,6 +24,7 @@ type Routes struct{}
 
 func NewRoutes(r *gin.Engine, d *Dependency) *Routes {
 	r.GET("/", mvc.Bind(d.Index.Index))
+	r.GET("/resource", mvc.Bind(d.Index.Resource))
 	user := r.Group("user")
 	{
 		user.POST("originLists", mvc.Bind(d.User.OriginLists))
