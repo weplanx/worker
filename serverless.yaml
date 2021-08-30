@@ -8,8 +8,8 @@ inputs:
   runtime: Go1
   namespace: default
   region: ap-guangzhou
-  memorySize: 64
-  timeout: 3
+  memorySize: 128
+  timeout: 5
   events:
     - apigw:
         parameters:
