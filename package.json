@@ -1,7 +1,7 @@
 {
   "name": "lab-serverless",
   "scripts": {
-    "build": "go build -tags=jsoniter -o dist/scf_bootstrap main.go",
+    "build": "go build -tags=jsoniter -o dist/scf_bootstrap main.go wire_gen.go",
     "deploy": "npm run build && serverless deploy"
   }
 }

@@ -5,11 +5,14 @@ import (
 	"github.com/google/wire"
 	"github.com/kainonly/go-bit/mvc"
 	"lab-serverless/app/scf/controller"
+	"lab-serverless/app/scf/service"
 )
 
-var App = wire.NewSet(
+var Provides = wire.NewSet(
+	service.Provides,
+	controller.Provides,
 	wire.Struct(new(Dependency), "*"),
-	NewSCF,
+	NewRoutes,
 )
 
 type Dependency struct {
@@ -17,21 +20,13 @@ type Dependency struct {
 	*controller.User
 }
 
-type SCF struct{}
+type Routes struct{}
 
-func NewSCF(r *gin.Engine, d *Dependency) *SCF {
+func NewRoutes(r *gin.Engine, d *Dependency) *Routes {
 	r.GET("/", mvc.Bind(d.Index.Index))
 	user := r.Group("user")
 	{
 		user.POST("originLists", mvc.Bind(d.User.OriginLists))
 	}
-	return &SCF{}
+	return &Routes{}
 }
-
-//func Routes(r *gin.Engine, d *Dependency) {
-//	r.GET("/", mvc.Bind(d.Index.Index))
-//	user := r.Group("user")
-//	{
-//		user.POST("originLists", mvc.Bind(d.User.OriginLists))
-//	}
-//}

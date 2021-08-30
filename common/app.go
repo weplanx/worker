@@ -1,4 +1,4 @@
-package config
+package common
 
 type App struct {
 	Name string `yaml:"name"`

@@ -1,4 +1,4 @@
-package config
+package common
 
 type CorsOption struct {
 	// AllowOrigins is a list of origins a cross-domain request can be executed from.

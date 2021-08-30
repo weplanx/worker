@@ -1,4 +1,4 @@
-package config
+package common
 
 type Lock struct {
 	Limit        int64 `yaml:"limit"`

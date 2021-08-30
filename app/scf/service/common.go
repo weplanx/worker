@@ -3,11 +3,11 @@ package service
 import (
 	"github.com/google/wire"
 	"gorm.io/gorm"
-	"lab-serverless/config"
+	"lab-serverless/common"
 )
 
 type Dependency struct {
-	Config config.Config
+	Config common.Config
 	Db     *gorm.DB
 }
 

@@ -1,4 +1,4 @@
-package config
+package common
 
 type Database struct {
 	Dsn             string `yaml:"dsn"`
