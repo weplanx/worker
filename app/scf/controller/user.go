@@ -2,7 +2,7 @@ package controller
 
 import (
 	"github.com/kainonly/go-bit/crud"
-	"lab-serverless/model"
+	"skeleton/model"
 )
 
 type User struct {

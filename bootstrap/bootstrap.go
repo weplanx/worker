@@ -6,7 +6,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
-	"lab-serverless/common"
+	"skeleton/common"
 	"time"
 )
 

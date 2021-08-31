@@ -3,7 +3,7 @@ package controller
 import (
 	"github.com/google/wire"
 	"gorm.io/gorm"
-	"lab-serverless/app/scf/service"
+	"skeleton/app/scf/service"
 )
 
 type Dependency struct {

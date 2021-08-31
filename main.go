@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/caarlos0/env/v6"
-	"lab-serverless/common"
 	"log"
+	"skeleton/common"
 )
 
 func main() {

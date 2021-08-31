@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/google/wire"
 	"gorm.io/gorm"
-	"lab-serverless/common"
+	"skeleton/common"
 )
 
 type Dependency struct {

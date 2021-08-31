@@ -7,12 +7,12 @@
 package main
 
 import (
-	"lab-serverless/app"
-	"lab-serverless/app/scf"
-	"lab-serverless/app/scf/controller"
-	"lab-serverless/app/scf/service"
-	"lab-serverless/bootstrap"
-	"lab-serverless/common"
+	"skeleton/app"
+	"skeleton/app/scf"
+	"skeleton/app/scf/controller"
+	"skeleton/app/scf/service"
+	"skeleton/bootstrap"
+	"skeleton/common"
 )
 
 // Injectors from wire.go:

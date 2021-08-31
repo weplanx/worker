@@ -3,8 +3,8 @@ package app
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"lab-serverless/app/scf"
-	"lab-serverless/bootstrap"
+	"skeleton/app/scf"
+	"skeleton/bootstrap"
 )
 
 var Provides = wire.NewSet(

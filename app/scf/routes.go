@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"github.com/kainonly/go-bit/mvc"
-	"lab-serverless/app/scf/controller"
-	"lab-serverless/app/scf/service"
+	"skeleton/app/scf/controller"
+	"skeleton/app/scf/service"
 )
 
 var Provides = wire.NewSet(

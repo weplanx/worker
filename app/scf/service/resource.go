@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"lab-serverless/model"
+	"skeleton/model"
 )
 
 type Resource struct {

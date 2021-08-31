@@ -1,4 +1,4 @@
-module lab-serverless
+module skeleton
 
 go 1.17
 
