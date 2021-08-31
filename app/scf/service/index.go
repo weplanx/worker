@@ -9,7 +9,7 @@ type Index struct {
 }
 
 func NewIndex(d *Dependency) *Index {
-	return &Index{d}
+	return &Index{Dependency: d}
 }
 
 func (x *Index) Version() interface{} {
