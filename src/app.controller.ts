@@ -1,5 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
+
 import { DatabaseService } from '@weplanx/database';
+
 import { Order } from './data';
 
 @Controller()
@@ -24,6 +26,4 @@ export class AppController {
       data,
     };
   }
-
-
 }
