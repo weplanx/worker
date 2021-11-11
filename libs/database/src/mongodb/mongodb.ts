@@ -1,5 +1,6 @@
-import { Db, MongoClient } from 'mongodb';
 import { Database, Query } from '@weplanx/database/types';
+import { Db, MongoClient } from 'mongodb';
+
 import { MongodbQuery } from './mongodb-query';
 
 export class Mongodb implements Database {

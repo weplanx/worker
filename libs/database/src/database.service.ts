@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { Database, Query } from '@weplanx/database/types';
 
 @Injectable()
