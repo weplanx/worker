@@ -19,9 +19,9 @@ export class DatabaseModule {
         {
           provide: 'DATABASE',
           useFactory: async (config: ConfigService) => {
-            const uri = config.get('DATABASE_URI');
+            const { uri, name } = config.get('database');
             const client = await MongoClient.connect(uri);
-            return new Mongodb(client, client.db('weplanx'));
+            return new Mongodb(client, client.db(name));
           },
           inject: [ConfigService],
         },
