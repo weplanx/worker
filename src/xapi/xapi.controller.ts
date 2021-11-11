@@ -2,11 +2,11 @@ import { Body, Controller, Param, Post } from '@nestjs/common';
 
 import { DatabaseService } from '@weplanx/database';
 
-import { DeleteDto } from './delete.dto';
-import { FindByPageDto } from './find-by-page.dto';
-import { FindOneDto } from './find-one.dto';
-import { FindDto } from './find.dto';
-import { UpdateDto } from './update.dto';
+import { DeleteDto } from './dto/delete.dto';
+import { FindByPageDto } from './dto/find-by-page.dto';
+import { FindOneDto } from './dto/find-one.dto';
+import { FindDto } from './dto/find.dto';
+import { UpdateDto } from './dto/update.dto';
 
 @Controller('xapi/:collection')
 export class XapiController {

@@ -5,6 +5,8 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 
+import fastifyCookie from 'fastify-cookie';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -13,6 +15,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
   app.useGlobalPipes(new ValidationPipe());
+  app.register(fastifyCookie);
   await app.listen(9000, '::0');
 }
 bootstrap();

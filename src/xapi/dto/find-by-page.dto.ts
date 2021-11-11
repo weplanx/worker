@@ -7,7 +7,7 @@ import {
 } from 'class-validator';
 import { Sort } from 'mongodb';
 
-import { Page } from './page';
+import { PageInterface } from '../interfaces/page.interface';
 
 export class FindByPageDto {
   @IsObject()
@@ -20,6 +20,6 @@ export class FindByPageDto {
 
   @IsNotEmpty()
   @ValidateNested()
-  @Type(() => Page)
-  page: Page;
+  @Type(() => PageInterface)
+  page: PageInterface;
 }

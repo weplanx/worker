@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
@@ -10,7 +10,7 @@ import { LocalStrategy } from './local.strategy';
 @Module({
   imports: [
     AdminModule,
-    PassportModule,
+    PassportModule.register({ session: true }),
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => {
         return {

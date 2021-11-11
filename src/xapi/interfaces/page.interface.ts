@@ -1,6 +1,6 @@
 import { IsIn, IsNumber, Min } from 'class-validator';
 
-export class Page {
+export class PageInterface {
   @Min(1)
   @IsNumber()
   index: number;

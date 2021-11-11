@@ -26,10 +26,8 @@ export class AuthService {
     return null;
   }
 
-  async login(admin: Admin) {
-    const payload = { username: admin.username, sub: admin._id.toHexString() };
-    return {
-      access_token: this.jwt.sign(payload),
-    };
+  createToken(data: Admin): string {
+    const payload = { username: data.username, sub: data._id.toHexString() };
+    return this.jwt.sign(payload);
   }
 }

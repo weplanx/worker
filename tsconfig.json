@@ -13,6 +13,9 @@
     "incremental": true,
     "skipLibCheck": true,
     "paths": {
+      "common": [
+        "common"
+      ],
       "@weplanx/database": [
         "libs/database/src"
       ],
