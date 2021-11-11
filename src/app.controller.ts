@@ -1,29 +1,15 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { DatabaseService } from '@weplanx/database';
-
-import { Order } from './data';
 
 @Controller()
 export class AppController {
   constructor(private db: DatabaseService) {}
 
-  @Get()
-  async index() {
-    const data = await this.db
-      .collection<Order>('order')
-      .select({
-        _id: 1,
-        order_number: 1,
-      })
-      .sort({
-        order_number: 1,
-        service_number: 1,
-      })
-      .limit(10)
-      .find((cursor) => cursor.allowDiskUse());
-    return {
-      data,
-    };
+  @UseGuards(AuthGuard('local'))
+  @Post('auth/login')
+  async login(@Req() req: any) {
+    return req.user;
   }
 }
