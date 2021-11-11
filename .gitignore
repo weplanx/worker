@@ -1,3 +1,16 @@
+# compiled output
+/dist
+/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
 # OS
 .DS_Store
 
@@ -21,8 +34,6 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
-/node_modules
-/package-lock.json
-/serverless.yml
-/.env
-/dist
+dist
+package-lock.json
+.env
