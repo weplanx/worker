@@ -1,11 +1,13 @@
 package main
 
-import "github.com/gofiber/fiber/v2"
+import "github.com/gin-gonic/gin"
 
 func main() {
-	app := fiber.New()
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
 	})
-	app.Listen(":3000")
+	r.Run()
 }
