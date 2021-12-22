@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { Db, MongoClient } from 'mongodb';
 
 @Injectable()
-export class DatabaseService extends Db implements OnModuleInit {
+export class Database extends Db implements OnModuleInit {
   private client: MongoClient;
 
   constructor(config: ConfigService) {

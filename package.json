@@ -26,7 +26,6 @@
     "fastify": "^3.23.1",
     "fastify-cookie": "^5.3.2",
     "hash-wasm": "^4.9.0",
-    "js-yaml": "^4.1.0",
     "mongodb": "^4.1.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
