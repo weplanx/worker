@@ -6,6 +6,7 @@ export class UpdateDto {
   id: string;
 
   @IsObject()
+  @IsOptional()
   where: Record<string, any>;
 
   @IsObject()

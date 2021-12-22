@@ -10,7 +10,7 @@ export class FindDto {
   @IsOptional()
   where: Record<string, any>;
 
-  @IsObject()
+  @IsArray()
   @IsOptional()
   sort: Sort;
 

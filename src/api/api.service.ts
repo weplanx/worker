@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 
 import { Database } from '@common/database';
-import { Filter, ObjectId, Sort, UpdateFilter } from 'mongodb';
+import { Filter, ObjectId, Sort, SortDirection, UpdateFilter } from 'mongodb';
+import { PageDto } from './dto/page.dto';
 
 @Injectable()
 export class ApiService {
@@ -24,7 +25,16 @@ export class ApiService {
   }
 
   async find<T>(name: string, filter: Filter<T> = {}, sort?: Sort) {
-    return this.db.collection(name).find(filter).sort(sort).toArray();
+    let query = this.db
+      .collection<T>(name)
+      .find(filter)
+      .limit(20)
+      .skip(0)
+      .sort(sort);
+    if ((sort as [string, SortDirection][]).length > 1) {
+      query = query.allowDiskUse();
+    }
+    return query.toArray();
   }
 
   async findById(name: string, id: string[], sort?: Sort) {
@@ -34,14 +44,28 @@ export class ApiService {
     });
   }
 
-  async findByPage<T>(name: string, filter: Filter<T>) {
-    let total = 0;
-    if (filter) {
-      total = await this.db.collection(name).countDocuments(filter);
-    } else {
+  async findByPage<T>(
+    name: string,
+    filter: Filter<T>,
+    page: PageDto,
+    sort?: Sort,
+  ) {
+    let total: number;
+    if (Object.keys(filter).length === 0) {
       total = await this.db.collection(name).estimatedDocumentCount();
+    } else {
+      total = await this.db.collection(name).countDocuments(filter);
     }
-    const value = await this.db.collection<T>(name).find(filter).toArray();
+    let query = this.db
+      .collection<T>(name)
+      .find(filter)
+      .limit(page.size)
+      .skip(page.size * (page.index - 1))
+      .sort(sort);
+    if ((sort as [string, SortDirection][]).length > 1) {
+      query = query.allowDiskUse();
+    }
+    const value = await query.toArray();
     return {
       total,
       value,

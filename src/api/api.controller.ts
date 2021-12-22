@@ -1,5 +1,5 @@
 import { Body, Controller, Param, Post } from '@nestjs/common';
-import { WithId, Document, UpdateResult, DeleteResult } from 'mongodb';
+import { DeleteResult, Document, UpdateResult, WithId } from 'mongodb';
 
 import { ApiService } from './api.service';
 import { DeleteDto } from './dto/delete.dto';
@@ -18,7 +18,7 @@ export class ApiController {
     if (body.id) {
       value = await this.api.findById(param.name, body.id, body.sort);
     } else {
-      value = await this.api.find(param.name, body.where);
+      value = await this.api.find(param.name, body.where, body.sort);
     }
     return {
       value,
@@ -27,7 +27,12 @@ export class ApiController {
 
   @Post('find_by_page')
   async findByPage(@Param() param: any, @Body() body: FindByPageDto) {
-    return await this.api.findByPage(param.name, body.where);
+    return await this.api.findByPage(
+      param.name,
+      body.where,
+      body.page,
+      body.sort,
+    );
   }
 
   @Post('find_one')

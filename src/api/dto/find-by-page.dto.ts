@@ -1,5 +1,6 @@
 import { Type } from 'class-transformer';
 import {
+  IsArray,
   IsNotEmpty,
   IsObject,
   IsOptional,
@@ -14,7 +15,7 @@ export class FindByPageDto {
   @IsOptional()
   where: Record<string, any>;
 
-  @IsObject()
+  @IsArray()
   @IsOptional()
   sort: Sort;
 
