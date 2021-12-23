@@ -24,12 +24,12 @@ export class ApiService {
     });
   }
 
-  async find<T>(name: string, filter: Filter<T> = {}, sort?: Sort) {
+  async find<T>(name: string, filter: Filter<T> = {}, next = 0, sort?: Sort) {
     let query = this.db
       .collection<T>(name)
       .find(filter)
-      .limit(20)
-      .skip(0)
+      .skip(next)
+      .limit(100)
       .sort(sort);
     if ((sort as [string, SortDirection][]).length > 1) {
       query = query.allowDiskUse();
@@ -37,9 +37,10 @@ export class ApiService {
     return query.toArray();
   }
 
-  async findById(name: string, id: string[], sort?: Sort) {
+  async findById(name: string, id: string[], next = 0, sort?: Sort) {
     return this.find(name, {
       _id: { $in: id.map((v) => new ObjectId(v)) },
+      next,
       sort,
     });
   }

@@ -16,12 +16,18 @@ export class ApiController {
   async find(@Param() param: any, @Body() body: FindDto) {
     let value: WithId<Document>[];
     if (body.id) {
-      value = await this.api.findById(param.name, body.id, body.sort);
+      value = await this.api.findById(
+        param.name,
+        body.id,
+        body.next,
+        body.sort,
+      );
     } else {
-      value = await this.api.find(param.name, body.where, body.sort);
+      value = await this.api.find(param.name, body.where, body.next, body.sort);
     }
     return {
       value,
+      next: (body.next ?? 0) + 100,
     };
   }
 

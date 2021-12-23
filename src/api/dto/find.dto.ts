@@ -1,4 +1,10 @@
-import { IsArray, IsObject, IsOptional } from 'class-validator';
+import {
+  IsArray,
+  IsDivisibleBy,
+  IsNumber,
+  IsObject,
+  IsOptional,
+} from 'class-validator';
 import { Sort } from 'mongodb';
 
 export class FindDto {
@@ -14,8 +20,8 @@ export class FindDto {
   @IsOptional()
   sort: Sort;
 
-  // @IsNumber()
-  // @IsDivisibleBy(100)
-  // @IsOptional()
-  // next: number;
+  @IsNumber()
+  @IsDivisibleBy(100)
+  @IsOptional()
+  next: number;
 }
