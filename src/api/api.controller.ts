@@ -26,30 +26,37 @@ export class ApiController {
       value = await this.api.find(param.name, body.where, body.next, body.sort);
     }
     return {
-      value,
-      next: (body.next ?? 0) + 100,
+      data: {
+        value,
+        next: (body.next ?? 0) + 100,
+      },
     };
   }
 
   @Post('find_by_page')
   async findByPage(@Param() param: any, @Body() body: FindByPageDto) {
-    return await this.api.findByPage(
+    const data = await this.api.findByPage(
       param.name,
       body.where,
       body.page,
       body.sort,
     );
+    return {
+      data,
+    };
   }
 
   @Post('find_one')
   async findOne(@Param() param: any, @Body() body: FindOneDto) {
-    let value: WithId<Document>;
+    let data: WithId<Document>;
     if (body.id) {
-      value = await this.api.findOneById(param.name, body.id);
+      data = await this.api.findOneById(param.name, body.id);
     } else {
-      value = await this.api.findOne(param.name, body.where);
+      data = await this.api.findOne(param.name, body.where);
     }
-    return value;
+    return {
+      data,
+    };
   }
 
   @Post('create')
@@ -59,23 +66,27 @@ export class ApiController {
 
   @Post('update')
   async update(@Param() param: any, @Body() body: UpdateDto) {
-    let result: UpdateResult;
+    let data: UpdateResult;
     if (body.id) {
-      result = await this.api.updateById(param.name, body.id, body.update);
+      data = await this.api.updateById(param.name, body.id, body.update);
     } else {
-      result = await this.api.update(param.name, body.where, body.update);
+      data = await this.api.update(param.name, body.where, body.update);
     }
-    return result;
+    return {
+      data,
+    };
   }
 
   @Post('delete')
   async delete(@Param() param: any, @Body() body: DeleteDto) {
-    let result: DeleteResult;
+    let data: DeleteResult;
     if (body.id) {
-      result = await this.api.deleteById(param.name, body.id);
+      data = await this.api.deleteById(param.name, body.id);
     } else {
-      result = await this.api.delete(param.name, body.where);
+      data = await this.api.delete(param.name, body.where);
     }
-    return result;
+    return {
+      data,
+    };
   }
 }

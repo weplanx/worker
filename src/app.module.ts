@@ -6,6 +6,7 @@ import { Database } from '@common/database';
 import { ApiModule } from './api/api.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { PagesModule } from './pages/pages.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { AppService } from './app.service';
       isGlobal: true,
     }),
     ApiModule,
+    PagesModule,
   ],
   controllers: [AppController],
   providers: [AppService, Database],

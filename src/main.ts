@@ -14,6 +14,11 @@ async function bootstrap() {
     AppModule,
     new FastifyAdapter(),
   );
+  app.enableCors({
+    origin: 'https://app.kainonly.com',
+    credentials: true,
+  });
+
   app.useGlobalPipes(new ValidationPipe());
   app.register(fastifyCookie);
   await app.listen(9000, '::0');
