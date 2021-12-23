@@ -1,4 +1,7 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
 @Controller('pages')
-export class PagesController {}
+export class PagesController {
+  @Get('check_key/:key')
+  async checkKey() {}
+}
