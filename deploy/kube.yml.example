@@ -2,22 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: x-func
-  name: x-func-deploy
+    app: x-api
+  name: x-api-deploy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: x-func
+      app: x-api
   template:
     metadata:
       labels:
-        app: x-func
+        app: x-api
     spec:
       containers:
-        - image: <...>/x-func:<version>
+        - image: <...>/x-api:<version>
           imagePullPolicy: Always
-          name: x-func
+          name: x-api
           ports:
             - containerPort: 9000
       nodeSelector:
@@ -26,21 +26,25 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: x-func-svc
+  name: x-api-svc
 spec:
   ports:
     - port: 80
       protocol: TCP
       targetPort: 9000
   selector:
-    app: x-func
+    app: x-api
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: api
+  name: x-api
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: web
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: ...
+    traefik.ingress.kubernetes.io/router.tls.domains.0.main: ...
+    traefik.ingress.kubernetes.io/router.tls.domains.0.sans: ...
 spec:
   rules:
     - host: <...>
@@ -50,6 +54,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: x-func-svc
+                name: x-api-svc
                 port:
                   number: 80
