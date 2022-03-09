@@ -14,7 +14,7 @@
 
 ```json
 {
-  "$schema": "./schema/draft/v1alpha.json",
+  "$schema": "https://raw.githubusercontent.com/weplanx/skeleton/main/schema/draft/v1alpha.json",
   "data": []
 }
 ```
