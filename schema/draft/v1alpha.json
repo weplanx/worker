@@ -26,10 +26,10 @@
           "enum": [
             "default",
             "form",
+            "tag",
             "dashboard",
             "group"
-          ],
-          "description": "种类。\ndefault：作为数据源，包含数据列表与数据填充等功能\nform：独立的数据填充页面\ndashboard：数据分析处理、结果展示功能，如数据汇总、趋势分析图表\ngroup：导航中将其他种类分组显示"
+          ]
         },
         "schema": {
           "$ref": "#/definitions/schema"
@@ -108,7 +108,6 @@
             "picture",
             "video",
             "file",
-            "json",
             "address"
           ],
           "description": "字段类型"
