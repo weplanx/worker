@@ -68,9 +68,9 @@ func UseTransfer(values *common.Values, js nats.JetStreamContext) (client *trans
 	if client, err = transfer.New(values.Namespace, js); err != nil {
 		return nil, err
 	}
-	if err = client.Set("worker", transfer.Option{
-		Topic:       "worker",
-		Description: "工作节点",
+	if err = client.Set("schedules", transfer.Option{
+		Topic:       "schedules",
+		Description: "定时调度日志",
 	}); err != nil {
 		return
 	}

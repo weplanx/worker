@@ -17,9 +17,16 @@ func (x *App) Run() (err error) {
 	httpClient := resty.New()
 	httpClient.JSONMarshal = jsoniter.Marshal
 	httpClient.JSONUnmarshal = jsoniter.Unmarshal
+	name := fmt.Sprintf(`%s:schedules`, x.Values.Namespace)
 	subject := fmt.Sprintf(`%s.schedules`, x.Values.Namespace)
-	queue := fmt.Sprintf(`%s:schedules`, x.Values.Namespace)
-	if _, err = x.Js.QueueSubscribe(subject, queue, func(msg *nats.Msg) {
+	if _, err = x.Js.AddStream(&nats.StreamConfig{
+		Name:        name,
+		Subjects:    []string{subject},
+		Description: "定时调度发布",
+	}); err != nil {
+		return
+	}
+	if _, err = x.Js.QueueSubscribe(subject, name, func(msg *nats.Msg) {
 		var task Task
 		if err := msgpack.Unmarshal(msg.Data, &task); err != nil {
 			x.Log.Error("解码失败",
