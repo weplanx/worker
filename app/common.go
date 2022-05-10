@@ -32,7 +32,8 @@ type HttpOption struct {
 }
 
 type EmailOption struct {
-	address string `msgpack:"address"`
-	content string `msgpack:"content"`
-	theme   string `msgpack:"theme"`
+	addresses []string `msgpack:"addresses"`
+	copyTo    []string `msgpack:"copyTo"`
+	content   string   `msgpack:"content"`
+	Subject   string   `msgpack:"subject"`
 }

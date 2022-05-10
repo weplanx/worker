@@ -38,9 +38,17 @@ type Values struct {
 	Namespace string `yaml:"namespace"`
 	Debug     bool   `yaml:"debug"`
 	Nats      Nats   `yaml:"nats"`
+	Email     Email  `yaml:"email"`
 }
 
 type Nats struct {
 	Hosts []string `yaml:"hosts"`
 	Nkey  string   `yaml:"nkey"`
+}
+
+type Email struct {
+	Host     string `yaml:"host"`
+	Port     string `yaml:"port"`
+	UserName string `yaml:"userName"`
+	Password string `yaml:"password"`
 }
