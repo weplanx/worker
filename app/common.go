@@ -30,3 +30,9 @@ type HttpOption struct {
 	Headers map[string]string      `msgpack:"headers"`
 	Body    map[string]interface{} `msgpack:"body"`
 }
+
+type EmailOption struct {
+	address string `msgpack:"address"`
+	content string `msgpack:"content"`
+	theme   string `msgpack:"theme"`
+}
