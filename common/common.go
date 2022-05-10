@@ -48,7 +48,7 @@ type Nats struct {
 
 type Email struct {
 	Host     string `yaml:"host"`
-	Port     string `yaml:"port"`
+	Port     int    `yaml:"port"`
 	UserName string `yaml:"userName"`
 	Password string `yaml:"password"`
 }

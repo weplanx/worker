@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"crypto/tls"
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	jsoniter "github.com/json-iterator/go"
@@ -10,6 +11,7 @@ import (
 	"github.com/vmihailenco/msgpack/v5"
 	"github.com/weplanx/transfer"
 	"go.uber.org/zap"
+	"gopkg.in/gomail.v2"
 	"time"
 )
 
@@ -37,6 +39,8 @@ func (x *App) Run() (err error) {
 		case "HTTP":
 			x.HTTPMode(task)
 			break
+		case "EMAIL":
+			x.EmailMode(task)
 		}
 	}); err != nil {
 		return
@@ -107,5 +111,40 @@ func (x *App) HTTPMode(task Task) (err error) {
 		zap.Any("headers", option.Headers),
 		zap.Any("body", option.Body),
 	)
+	return
+}
+
+func (x *App) EmailMode(task Task) (err error) {
+	var option EmailOption
+	if err = mapstructure.Decode(task.Option, &option); err != nil {
+		x.Log.Error("配置加载失败",
+			zap.Any("option", task.Option),
+			zap.Error(err),
+		)
+		return
+	}
+	email := x.Inject.Values.Email
+	dialer := gomail.NewDialer(email.Host, email.Port, email.UserName, email.Password)
+
+	m := gomail.NewMessage()
+	m.SetHeader("From", email.UserName)
+	m.SetHeader("To", option.addresses...)
+	m.SetHeader("Cc", option.copyTo...)
+	m.SetHeader("Subject", option.Subject)
+	m.SetBody("text/html", option.content)
+
+	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	if err = dialer.DialAndSend(m); err != nil {
+		x.Log.Error("邮件回调失败",
+			zap.String("key", task.Key),
+			zap.Int("n", task.N),
+			zap.Any("addresses", option.addresses),
+			zap.Any("copyTo", option.copyTo),
+			zap.Any("Subject", option.Subject),
+			zap.Any("content", option.content),
+			zap.Error(err),
+		)
+		return
+	}
 	return
 }
