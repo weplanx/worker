@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-resty/resty/v2"
 	jsoniter "github.com/json-iterator/go"
+	"github.com/mitchellh/mapstructure"
 	"github.com/nats-io/nats.go"
 	"github.com/vmihailenco/msgpack/v5"
 	"github.com/weplanx/transfer"
@@ -14,9 +15,6 @@ import (
 
 // Run 启动服务
 func (x *App) Run() (err error) {
-	httpClient := resty.New()
-	httpClient.JSONMarshal = jsoniter.Marshal
-	httpClient.JSONUnmarshal = jsoniter.Unmarshal
 	name := fmt.Sprintf(`%s:schedules`, x.Values.Namespace)
 	subject := fmt.Sprintf(`%s.schedules`, x.Values.Namespace)
 	if _, err = x.Js.AddStream(&nats.StreamConfig{
@@ -37,57 +35,77 @@ func (x *App) Run() (err error) {
 		}
 		switch task.Mode {
 		case "HTTP":
-			spec := task.Spec.(HttpSpec)
-			resp, err := httpClient.R().
-				SetHeaders(spec.Headers).
-				SetBody(spec.Body).
-				Post(spec.Url)
-			if err != nil {
-				x.Log.Error("网络回调失败",
-					zap.String("key", task.Key),
-					zap.Any("headers", spec.Headers),
-					zap.Any("body", spec.Body),
-					zap.Error(err),
-				)
-				return
-			}
-			tags := map[string]string{
-				"url": spec.Url,
-			}
-			payload, err := transfer.NewPayload(transfer.InfluxDto{
-				Measurement: "schedules",
-				Tags:        tags,
-				Fields: map[string]interface{}{
-					"request": map[string]interface{}{
-						"headers": spec.Headers,
-						"body":    spec.Body,
-					},
-					"response": map[string]interface{}{
-						"headers": resp.Header(),
-						"body":    resp.Body(),
-					},
-				},
-				Time: time.Now(),
-			})
-			if err != nil {
-				x.Log.Error("日志编码失败",
-					zap.Error(err),
-				)
-			}
-			if err = x.Transfer.Publish(context.TODO(), "schedules", payload); err != nil {
-				x.Log.Error("日志传输失败",
-					zap.String("key", task.Key),
-					zap.Any("payload", payload),
-					zap.Error(err),
-				)
-				return
-			}
-			msg.Ack()
+			x.HTTPMode(task)
 			break
 		}
-
-	}, nats.ManualAck()); err != nil {
+	}); err != nil {
 		return
 	}
+	return
+}
+
+func (x *App) HTTPMode(task Task) (err error) {
+	httpClient := resty.New()
+	httpClient.JSONMarshal = jsoniter.Marshal
+	httpClient.JSONUnmarshal = jsoniter.Unmarshal
+	var option HttpOption
+	if err = mapstructure.Decode(task.Option, &option); err != nil {
+		x.Log.Error("配置加载失败",
+			zap.Any("option", task.Option),
+			zap.Error(err),
+		)
+		return
+	}
+	resp, err := httpClient.R().
+		SetHeaders(option.Headers).
+		SetBody(option.Body).
+		Post(option.Url)
+	if err != nil {
+		x.Log.Error("网络回调失败",
+			zap.String("key", task.Key),
+			zap.Int("n", task.N),
+			zap.Any("headers", option.Headers),
+			zap.Any("body", option.Body),
+			zap.Error(err),
+		)
+		return
+	}
+	tags := map[string]string{
+		"url": option.Url,
+	}
+	payload, err := transfer.NewPayload(transfer.InfluxDto{
+		Measurement: "schedules",
+		Tags:        tags,
+		Fields: map[string]interface{}{
+			"request": map[string]interface{}{
+				"headers": option.Headers,
+				"body":    option.Body,
+			},
+			"response": map[string]interface{}{
+				"headers": resp.Header(),
+				"body":    resp.Body(),
+			},
+		},
+		Time: time.Now(),
+	})
+	if err != nil {
+		x.Log.Error("日志编码失败",
+			zap.Error(err),
+		)
+	}
+	if err = x.Transfer.Publish(context.TODO(), "schedules", payload); err != nil {
+		x.Log.Error("日志传输失败",
+			zap.String("key", task.Key),
+			zap.Any("payload", payload),
+			zap.Error(err),
+		)
+		return
+	}
+	x.Log.Info("网络回调成功",
+		zap.String("key", task.Key),
+		zap.Int("n", task.N),
+		zap.Any("headers", option.Headers),
+		zap.Any("body", option.Body),
+	)
 	return
 }

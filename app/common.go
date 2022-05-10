@@ -19,13 +19,14 @@ func New(i *common.Inject) (x *App, err error) {
 }
 
 type Task struct {
-	Key  string
-	Mode string
-	Spec interface{}
+	Key    string      `msgpack:"key"`
+	N      int         `msgpack:"n"`
+	Mode   string      `msgpack:"mode"`
+	Option interface{} `msgpack:"option"`
 }
 
-type HttpSpec struct {
-	Url     string
-	Headers map[string]string
-	Body    map[string]interface{}
+type HttpOption struct {
+	Url     string                 `msgpack:"url"`
+	Headers map[string]string      `msgpack:"headers"`
+	Body    map[string]interface{} `msgpack:"body"`
 }
