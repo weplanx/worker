@@ -12,6 +12,7 @@ import (
 	"github.com/weplanx/transfer"
 	"go.uber.org/zap"
 	"gopkg.in/gomail.v2"
+	"strings"
 	"time"
 )
 
@@ -146,5 +147,41 @@ func (x *App) EmailMode(task Task) (err error) {
 		)
 		return
 	}
+
+	tags := map[string]string{
+		"addresses": strings.Join(option.addresses, ","),
+	}
+	payload, err := transfer.NewPayload(transfer.InfluxDto{
+		Measurement: "schedules",
+		Tags:        tags,
+		Fields: map[string]interface{}{
+			"addresses": option.addresses,
+			"copyTo":    option.copyTo,
+			"content":   option.content,
+			"Subject":   option.Subject,
+		},
+		Time: time.Now(),
+	})
+	if err != nil {
+		x.Log.Error("日志编码失败",
+			zap.Error(err),
+		)
+	}
+	if err = x.Transfer.Publish(context.TODO(), "schedules", payload); err != nil {
+		x.Log.Error("日志传输失败",
+			zap.String("key", task.Key),
+			zap.Any("payload", payload),
+			zap.Error(err),
+		)
+		return
+	}
+	x.Log.Info("邮件回调成功",
+		zap.String("key", task.Key),
+		zap.Int("n", task.N),
+		zap.Any("addresses", option.addresses),
+		zap.Any("copyTo", option.copyTo),
+		zap.Any("content", option.content),
+		zap.Any("Subject", option.Subject),
+	)
 	return
 }
