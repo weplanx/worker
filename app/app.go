@@ -129,35 +129,35 @@ func (x *App) EmailMode(task Task) (err error) {
 
 	m := gomail.NewMessage()
 	m.SetHeader("From", email.UserName)
-	m.SetHeader("To", option.addresses...)
-	m.SetHeader("Cc", option.copyTo...)
+	m.SetHeader("To", option.Addresses...)
+	m.SetHeader("Cc", option.CopyTo...)
 	m.SetHeader("Subject", option.Subject)
-	m.SetBody("text/html", option.content)
+	m.SetBody("text/html", option.Content)
 
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err = dialer.DialAndSend(m); err != nil {
 		x.Log.Error("邮件回调失败",
 			zap.String("key", task.Key),
 			zap.Int("n", task.N),
-			zap.Any("addresses", option.addresses),
-			zap.Any("copyTo", option.copyTo),
+			zap.Any("Addresses", option.Addresses),
+			zap.Any("CopyTo", option.CopyTo),
 			zap.Any("Subject", option.Subject),
-			zap.Any("content", option.content),
+			zap.Any("Content", option.Content),
 			zap.Error(err),
 		)
 		return
 	}
 
 	tags := map[string]string{
-		"addresses": strings.Join(option.addresses, ","),
+		"Addresses": strings.Join(option.Addresses, ","),
 	}
 	payload, err := transfer.NewPayload(transfer.InfluxDto{
 		Measurement: "schedules",
 		Tags:        tags,
 		Fields: map[string]interface{}{
-			"addresses": option.addresses,
-			"copyTo":    option.copyTo,
-			"content":   option.content,
+			"Addresses": option.Addresses,
+			"CopyTo":    option.CopyTo,
+			"Content":   option.Content,
 			"Subject":   option.Subject,
 		},
 		Time: time.Now(),
@@ -178,9 +178,9 @@ func (x *App) EmailMode(task Task) (err error) {
 	x.Log.Info("邮件回调成功",
 		zap.String("key", task.Key),
 		zap.Int("n", task.N),
-		zap.Any("addresses", option.addresses),
-		zap.Any("copyTo", option.copyTo),
-		zap.Any("content", option.content),
+		zap.Any("Addresses", option.Addresses),
+		zap.Any("CopyTo", option.CopyTo),
+		zap.Any("Content", option.Content),
 		zap.Any("Subject", option.Subject),
 	)
 	return

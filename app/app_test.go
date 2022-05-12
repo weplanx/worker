@@ -7,6 +7,7 @@ import (
 	"github.com/weplanx/worker/common"
 	"log"
 	"testing"
+	"time"
 )
 
 func TestApp_EmailMode(t *testing.T) {
@@ -22,9 +23,8 @@ func TestApp_EmailMode(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	//name := fmt.Sprintf(`%s:schedules`, value.Namespace)
 	subject := fmt.Sprintf(`%s.schedules`, value.Namespace)
-	option := EmailOption{addresses: []string{"1306305902@qq.com"}, copyTo: []string{"weplanx@kainonly.com"}, content: "测试email", Subject: "测试主题"}
+	option := EmailOption{Addresses: []string{"poiuytrengo@qq.com"}, CopyTo: []string{"weplanx@kainonly.com"}, Content: "测试email", Subject: "测试主题"}
 	task := Task{Key: "adb", N: 1, Mode: "EMAIL", Option: option}
 	marshal, err := msgpack.Marshal(task)
 	if err != nil {
@@ -35,10 +35,5 @@ func TestApp_EmailMode(t *testing.T) {
 		panic(err)
 	}
 	log.Println(publish)
-}
-
-func TestTestApp_EmailMode(t *testing.T) {
-	for i := 0; i < 100; i++ {
-		TestApp_EmailMode(t)
-	}
+	time.Sleep(10 * time.Second)
 }
