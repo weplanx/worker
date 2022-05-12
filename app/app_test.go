@@ -24,7 +24,7 @@ func TestApp_EmailMode(t *testing.T) {
 	}
 	//name := fmt.Sprintf(`%s:schedules`, value.Namespace)
 	subject := fmt.Sprintf(`%s.schedules`, value.Namespace)
-	option := EmailOption{addresses: []string{}, copyTo: []string{}, content: "测试email", Subject: "测试主题"}
+	option := EmailOption{addresses: []string{"1306305902@qq.com"}, copyTo: []string{"weplanx@kainonly.com"}, content: "测试email", Subject: "测试主题"}
 	task := Task{Key: "adb", N: 1, Mode: "EMAIL", Option: option}
 	marshal, err := msgpack.Marshal(task)
 	if err != nil {
@@ -35,4 +35,10 @@ func TestApp_EmailMode(t *testing.T) {
 		panic(err)
 	}
 	log.Println(publish)
+}
+
+func TestTestApp_EmailMode(t *testing.T) {
+	for i := 0; i < 100; i++ {
+		TestApp_EmailMode(t)
+	}
 }
