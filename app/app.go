@@ -38,7 +38,7 @@ func (x *App) Run() (err error) {
 		}
 		switch task.Mode {
 		case "HTTP":
-			//x.HTTPMode(task)
+			x.HTTPMode(task)
 			break
 		case "EMAIL":
 			x.EmailMode(task)
