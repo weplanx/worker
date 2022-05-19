@@ -8,7 +8,7 @@ import (
 	"github.com/weplanx/worker/common"
 )
 
-func poshMessage(task app.Task) {
+func pushMessage(task app.Task) {
 	value, err := common.SetValues()
 	if err != nil {
 		panic(err)
