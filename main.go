@@ -1,21 +1,22 @@
 package main
 
 import (
-	"github.com/weplanx/worker/common"
+	"context"
+	"github.com/weplanx/worker/bootstrap"
 	"os"
 	"os/signal"
+	"time"
 )
 
 func main() {
-	v, err := common.SetValues()
+	app, err := bootstrap.NewApp()
 	if err != nil {
 		panic(err)
 	}
-	app, err := App(v)
-	if err != nil {
-		panic(err)
-	}
-	if err = app.Run(); err != nil {
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	defer cancel()
+	if err = app.Run(ctx); err != nil {
 		panic(err)
 	}
 

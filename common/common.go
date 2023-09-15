@@ -1,54 +1,36 @@
 package common
 
 import (
-	"errors"
 	"github.com/nats-io/nats.go"
-	"github.com/weplanx/transfer"
+	"github.com/weplanx/collector/transfer"
 	"go.uber.org/zap"
-	"gopkg.in/yaml.v3"
-	"io/ioutil"
-	"os"
 )
 
-func SetValues() (values *Values, err error) {
-	if _, err = os.Stat("./config/config.yml"); os.IsNotExist(err) {
-		err = errors.New("静态配置不存在，请检查路径 [./config/config.yml]")
-		return
-	}
-	var b []byte
-	b, err = ioutil.ReadFile("./config/config.yml")
-	if err != nil {
-		return
-	}
-	err = yaml.Unmarshal(b, &values)
-	if err != nil {
-		return
-	}
-	return
-}
-
 type Inject struct {
-	Values   *Values
-	Log      *zap.Logger
-	Js       nats.JetStreamContext
-	Transfer *transfer.Transfer
+	V         *Values
+	Log       *zap.Logger
+	Nats      *nats.Conn
+	JetStream nats.JetStreamContext
+	Transfer  *transfer.Transfer
 }
 
 type Values struct {
-	Namespace string `yaml:"namespace"`
-	Debug     bool   `yaml:"debug"`
-	Nats      Nats   `yaml:"nats"`
-	Email     Email  `yaml:"email"`
+	Namespace string `env:"NAMESPACE,required"`
+	Nats      struct {
+		Hosts []string `env:"HOSTS,required" envSeparator:","`
+		Nkey  string   `env:"NKEY,required"`
+	} `envPrefix:"NATS_"`
 }
 
-type Nats struct {
-	Hosts []string `yaml:"hosts"`
-	Nkey  string   `yaml:"nkey"`
+type Job struct {
+	Key    string      `msgpack:"key"`
+	Index  int         `msgpack:"index"`
+	Mode   string      `msgpack:"mode"`
+	Option interface{} `msgpack:"option"`
 }
 
-type Email struct {
-	Host     string `yaml:"host"`
-	Port     int    `yaml:"port"`
-	UserName string `yaml:"userName"`
-	Password string `yaml:"password"`
+type HttpOption struct {
+	Url     string                 `json:"url" msgpack:"url"`
+	Headers map[string]string      `json:"headers" msgpack:"headers"`
+	Body    map[string]interface{} `json:"body" msgpack:"body"`
 }

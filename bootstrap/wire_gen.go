@@ -4,42 +4,43 @@
 //go:build !wireinject
 // +build !wireinject
 
-package main
+package bootstrap
 
 import (
 	"github.com/weplanx/worker/app"
-	"github.com/weplanx/worker/bootstrap"
 	"github.com/weplanx/worker/common"
 )
 
 // Injectors from wire.go:
 
-func App(value *common.Values) (*app.App, error) {
-	logger, err := bootstrap.UseZap(value)
+func NewApp() (*app.App, error) {
+	values, err := LoadStaticValues()
 	if err != nil {
 		return nil, err
 	}
-	conn, err := bootstrap.UseNats(value)
+	logger, err := UseZap()
 	if err != nil {
 		return nil, err
 	}
-	jetStreamContext, err := bootstrap.UseJetStream(conn)
+	conn, err := UseNats(values)
 	if err != nil {
 		return nil, err
 	}
-	transfer, err := bootstrap.UseTransfer(value, jetStreamContext)
+	jetStreamContext, err := UseJetStream(conn)
+	if err != nil {
+		return nil, err
+	}
+	transfer, err := UseTransfer(values, jetStreamContext)
 	if err != nil {
 		return nil, err
 	}
 	inject := &common.Inject{
-		Values:   value,
-		Log:      logger,
-		Js:       jetStreamContext,
-		Transfer: transfer,
+		V:         values,
+		Log:       logger,
+		Nats:      conn,
+		JetStream: jetStreamContext,
+		Transfer:  transfer,
 	}
-	appApp, err := app.New(inject)
-	if err != nil {
-		return nil, err
-	}
+	appApp := app.Initialize(inject)
 	return appApp, nil
 }

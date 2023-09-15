@@ -1,8 +1,9 @@
 FROM alpine:edge
 
-RUN apk add tzdata
-
-COPY dist /app
 WORKDIR /app
 
-CMD [ "./main" ]
+RUN apk --no-cache add tzdata
+
+ADD worker /app/
+
+CMD [ "./worker" ]
