@@ -21,4 +21,6 @@
 !.vscode/launch.json
 !.vscode/extensions.json
 
+vendor
+
 config

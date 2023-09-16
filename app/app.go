@@ -70,15 +70,21 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
-	var r M
 	var resp *req.Response
-	resp, err = x.Http.R().
+	if resp, err = x.Http.R().
 		SetContext(ctx).
 		SetHeaders(option.Headers).
 		SetBody(option.Body).
-		SetSuccessResult(&r).
-		SetErrorResult(&r).
-		Post(option.Url)
+		Post(option.Url); err != nil {
+		x.Log.Error("Http:fail",
+			zap.String("key", job.Key),
+			zap.Int("index", job.Index),
+			zap.Any("headers", option.Headers),
+			zap.Any("body", option.Body),
+			zap.Error(err),
+		)
+		return
+	}
 
 	now := time.Now()
 	if e := x.Transfer.Publish(ctx, "logset_jobs", transfer.Payload{
@@ -94,7 +100,7 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 			"body":    option.Body,
 			"response": M{
 				"status": resp.StatusCode,
-				"body":   r,
+				"body":   string(resp.Bytes()),
 			},
 		},
 		XData: M{},
@@ -104,19 +110,8 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 			zap.Int("index", job.Index),
 			zap.Any("headers", option.Headers),
 			zap.Any("body", option.Body),
-			zap.Error(err),
+			zap.Error(e),
 		)
-		return
-	}
-	if err != nil {
-		x.Log.Error("Http:fail",
-			zap.String("key", job.Key),
-			zap.Int("index", job.Index),
-			zap.Any("headers", option.Headers),
-			zap.Any("body", option.Body),
-			zap.Error(err),
-		)
-		// TODO: Event Callback
 		return
 	}
 	x.Log.Debug("Http:ok",
@@ -126,7 +121,7 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 		zap.Any("body", option.Body),
 		zap.Any("response", M{
 			"status": resp.StatusCode,
-			"body":   r,
+			"body":   string(resp.Bytes()),
 		}),
 	)
 	return
