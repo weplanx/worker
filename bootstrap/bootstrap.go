@@ -5,7 +5,7 @@ import (
 	"github.com/caarlos0/env/v9"
 	"github.com/nats-io/nats.go"
 	"github.com/nats-io/nkeys"
-	"github.com/weplanx/collector/transfer"
+	transfer "github.com/weplanx/collector/client"
 	"github.com/weplanx/worker/common"
 	"go.uber.org/zap"
 	"os"
@@ -63,7 +63,7 @@ func UseJetStream(nc *nats.Conn) (nats.JetStreamContext, error) {
 	return nc.JetStream(nats.PublishAsyncMaxPending(256))
 }
 
-func UseTransfer(v *common.Values, js nats.JetStreamContext) (*transfer.Transfer, error) {
+func UseTransfer(v *common.Values, js nats.JetStreamContext) (*transfer.Client, error) {
 	return transfer.New(
 		transfer.SetNamespace(v.Namespace),
 		transfer.SetJetStream(js),

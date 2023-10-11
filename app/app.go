@@ -8,7 +8,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 	"github.com/nats-io/nats.go"
 	"github.com/vmihailenco/msgpack/v5"
-	"github.com/weplanx/collector/transfer"
+	transfer "github.com/weplanx/collector/client"
 	"github.com/weplanx/worker/common"
 	"go.uber.org/zap"
 	"time"

@@ -6,7 +6,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/weplanx/worker?style=flat-square)](https://goreportcard.com/report/github.com/weplanx/worker)
 [![GitHub license](https://img.shields.io/github/license/weplanx/worker?style=flat-square)](https://raw.githubusercontent.com/weplanx/worker/main/LICENSE)
 
-Distributed message event callback worker node
+Distribution message event callback worker node
 
 ## License
 

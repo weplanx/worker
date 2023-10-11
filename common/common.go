@@ -2,7 +2,7 @@ package common
 
 import (
 	"github.com/nats-io/nats.go"
-	"github.com/weplanx/collector/transfer"
+	transfer "github.com/weplanx/collector/client"
 	"go.uber.org/zap"
 )
 
@@ -11,7 +11,7 @@ type Inject struct {
 	Log       *zap.Logger
 	Nats      *nats.Conn
 	JetStream nats.JetStreamContext
-	Transfer  *transfer.Transfer
+	Transfer  *transfer.Client
 }
 
 type Values struct {
