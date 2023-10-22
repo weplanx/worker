@@ -64,9 +64,6 @@ func UseJetStream(nc *nats.Conn) (nats.JetStreamContext, error) {
 	return nc.JetStream(nats.PublishAsyncMaxPending(256))
 }
 
-func UseTransfer(v *common.Values, js nats.JetStreamContext) (*transfer.Client, error) {
-	return transfer.New(
-		transfer.SetNamespace(v.Namespace),
-		transfer.SetJetStream(js),
-	)
+func UseTransfer(js nats.JetStreamContext) (*transfer.Client, error) {
+	return transfer.New(js)
 }

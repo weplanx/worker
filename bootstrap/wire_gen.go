@@ -30,7 +30,7 @@ func NewApp() (*app.App, error) {
 	if err != nil {
 		return nil, err
 	}
-	client, err := UseTransfer(values, jetStreamContext)
+	client, err := UseTransfer(jetStreamContext)
 	if err != nil {
 		return nil, err
 	}

@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"fmt"
 	"github.com/bytedance/sonic"
 	"github.com/imroc/req/v3"
 	"github.com/mitchellh/mapstructure"
@@ -16,7 +15,6 @@ import (
 
 type App struct {
 	*common.Inject
-
 	Http *req.Client
 }
 
@@ -38,9 +36,8 @@ func (x *App) Run(ctx context.Context) (err error) {
 	}); err != nil {
 		return
 	}
-	subj := fmt.Sprintf(`%s.jobs.*`, x.V.Namespace)
-	queue := fmt.Sprintf(`%s:worker`, x.V.Namespace)
-	if _, err = x.Nats.QueueSubscribe(subj, queue, func(msg *nats.Msg) {
+
+	if _, err = x.Nats.QueueSubscribe("jobs.*", "WORKER", func(msg *nats.Msg) {
 		var job common.Job
 		if err = msgpack.Unmarshal(msg.Data, &job); err != nil {
 			return
@@ -54,14 +51,14 @@ func (x *App) Run(ctx context.Context) (err error) {
 		return
 	}
 
-	x.Log.Info("Service started!")
+	x.Log.Info("service started!")
 	return
 }
 
 func (x *App) HTTPMode(job common.Job) (err error) {
 	var option common.HttpOption
 	if err = mapstructure.Decode(job.Option, &option); err != nil {
-		x.Log.Error("HttpOption:fail",
+		x.Log.Error("http set fail",
 			zap.Any("option", job.Option),
 			zap.Error(err),
 		)
@@ -75,8 +72,8 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 		SetContext(ctx).
 		SetHeaders(option.Headers).
 		SetBody(option.Body).
-		Post(option.Url); err != nil {
-		x.Log.Error("Http:fail",
+		Send(option.Method, option.Url); err != nil {
+		x.Log.Error("http request fail",
 			zap.String("key", job.Key),
 			zap.Int("index", job.Index),
 			zap.Any("headers", option.Headers),
@@ -91,10 +88,11 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 		Timestamp: now,
 		Data: M{
 			"metadata": M{
-				"key":   job.Key,
-				"index": job.Index,
-				"mode":  job.Mode,
-				"url":   option.Url,
+				"key":    job.Key,
+				"index":  job.Index,
+				"mode":   job.Mode,
+				"method": option.Method,
+				"url":    option.Url,
 			},
 			"headers": option.Headers,
 			"body":    option.Body,
@@ -105,7 +103,7 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 		},
 		XData: M{},
 	}); e != nil {
-		x.Log.Error("Http:publish fail",
+		x.Log.Error("transfer publish fail",
 			zap.String("key", job.Key),
 			zap.Int("index", job.Index),
 			zap.Any("headers", option.Headers),
@@ -114,7 +112,7 @@ func (x *App) HTTPMode(job common.Job) (err error) {
 		)
 		return
 	}
-	x.Log.Debug("Http:ok",
+	x.Log.Debug("http request ok",
 		zap.String("key", job.Key),
 		zap.Int("index", job.Index),
 		zap.Any("headers", option.Headers),
